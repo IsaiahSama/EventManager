@@ -3,6 +3,7 @@
 // This file will be responsible for creating the endpoints to be used.
 
 include_once "controllers/AuthController.php";
+include_once "controllers/EventController.php";
 
 $routes = array();
 
