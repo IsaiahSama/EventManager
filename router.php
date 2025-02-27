@@ -8,10 +8,12 @@ $routes = array();
 
 $routes["GET"] = [
 	['/\/register/', "AuthController::getRegister"],
+	['/\/Login/', "AuthController::getLogin"],
 ];
 
 $routes["POST"] = [
 	['/\/register/', "AuthController::postRegister"],
+	['/\/login/', "AuthController::postLogin"],
 ];
 
 function route($uri, $method){

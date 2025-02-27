@@ -18,4 +18,13 @@ class AuthController {
 
 		// store user in database
 	}
+
+	public static function getLogin(): void {
+		render("views/auth_register.php");
+	}
+
+	public static function postLogin(): void {
+		$email = $_POST["email"];
+		$password = $_POST["password"];
+	}
 }
