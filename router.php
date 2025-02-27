@@ -8,12 +8,18 @@ $routes = array();
 
 $routes["GET"] = [
 	['/\/register/', "AuthController::getRegister"],
-	['/\/Login/', "AuthController::getLogin"],
+	['/\/login/', "AuthController::getLogin"],
+	['/\/event\/create/', "EventController::getEventCreate"],
+	['/\/event\/view\/[0-9]+/', "EventController::getEventView"],
+	['/\/event\/edit\/[0-9]+/', "EventController::getEventEdit"],
+	['/\/event\/delete\/[0-9]+/', "EventController::getEventDelete"],
 ];
 
 $routes["POST"] = [
 	['/\/register/', "AuthController::postRegister"],
 	['/\/login/', "AuthController::postLogin"],
+	['/\/event\/create/', "EventController::postEventCreate"],
+	['/\/event\/edit\/[0-9]+/', "EventController::postEventEdit"],
 ];
 
 function route($uri, $method){
