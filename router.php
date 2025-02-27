@@ -10,7 +10,9 @@ $routes["GET"] = [
 	['/\/register/', "AuthController::getRegister"],
 ];
 
-$routes["POST"] = [];
+$routes["POST"] = [
+	['/\/register/', "AuthController::postRegister"],
+];
 
 function route($uri, $method){
 	global $routes;

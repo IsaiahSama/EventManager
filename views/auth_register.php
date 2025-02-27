@@ -1,13 +1,13 @@
 <h1>Registration Page</h1>
 
-<form action="/register" action="POST">
+<form action="/register" method="POST">
 	<div>
 		<label for="email">Email</label>
 		<input id="email" type="email" name="email" required>
 	</div>
 	<div>
-		<label for="passsword">Passsword</label>
-		<input id="passsword" type="passsword" name="passsword" required>
+		<label for="password">Password</label>
+		<input id="password" type="password" name="password" required>
 	</div>
 
 	<div>
