@@ -3,8 +3,8 @@
 class Model
 {
 
-	protected $table;
-	protected $primaryKey;
+	protected string $table;
+	protected string $primaryKey;
 
 	public static function insert(array $fields): void
 	{

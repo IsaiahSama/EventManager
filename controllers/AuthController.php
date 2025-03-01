@@ -1,6 +1,7 @@
 <?php
 
 require_once "router.php";
+require_once "models/User.php";
 
 class AuthController
 {
@@ -27,6 +28,9 @@ class AuthController
 	{
 		$email = $_POST["email"];
 		$password = $_POST["password"];
+
+		$apiKey = User::createAPIKey();
+		die($apiKey);
 
 		// Validate email is unique 
 
