@@ -1,5 +1,11 @@
 <h1>Registration Page</h1>
 
+<?php
+if (isset($error)) {
+	echo "<span style='color:red;'>$error</span>";
+}
+?>
+
 <form action="/register" method="POST">
 	<div>
 		<label for="email">Email</label>
