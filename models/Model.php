@@ -14,7 +14,9 @@ class Model
 		$values = implode("','", array_values($fields));
 		$tablename = static::$table;
 
-		$sql = "INSERT INTO $tablename ($keys) VALUES ($values)";
+		$sql = "INSERT INTO $tablename ($keys) VALUES ('$values')";
+
+		echo $sql;
 
 		$conn->query($sql);
 	}
