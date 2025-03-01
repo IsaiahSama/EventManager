@@ -3,8 +3,8 @@
 class Model
 {
 
-	protected string $table;
-	protected string $primaryKey;
+	public static string $table;
+	public static string $primaryKey;
 
 	public static function insert(array $fields): void
 	{
@@ -27,7 +27,7 @@ class Model
 		$tablename = static::$table;
 		$key = static::$primaryKey;
 
-		$sql = "SELECT * FROM $tablename WHERE $key = $value";
+		$sql = "SELECT * FROM $tablename WHERE '$key' = '$value'";
 		$result = $conn->query($sql);
 
 		$row = $result->fetch_assoc();
@@ -41,7 +41,7 @@ class Model
 
 		$tablename = static::$table;
 
-		$sql = "SELECT FROM $tablename WHERE $field = $value";
+		$sql = "SELECT * FROM $tablename WHERE '$field' = '$value'";
 
 		$result = $conn->query($sql);
 		return $result->fetch_assoc();
@@ -60,7 +60,7 @@ class Model
 
 		$records = implode(",", $entries);
 
-		$sql = "UPDATE $tablename SET ($records) WHERE $key = $value";
+		$sql = "UPDATE $tablename SET ($records) WHERE '$key' = '$value'";
 
 		$conn->query($sql);
 	}
@@ -71,7 +71,7 @@ class Model
 
 		$tablename = static::$table;
 
-		$sql = "DELETE FROM $tablename WHERE $field = $value";
+		$sql = "DELETE FROM $tablename WHERE '$field' = '$value'";
 
 		$conn->query($sql);
 	}

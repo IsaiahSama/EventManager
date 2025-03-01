@@ -7,8 +7,8 @@ $chars = str_split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567
 class User extends Model
 {
 
-	protected string $table = "user";
-	protected string $primaryKey = "userID";
+	public static string $table = "user";
+	public static string $primaryKey = "userID";
 
 	public int $id;
 	public string $email;
