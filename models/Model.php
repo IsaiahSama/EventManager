@@ -35,7 +35,7 @@ class Model
 		return $row;
 	}
 
-	public static function findWhere(string $field, string $value): array|null
+	public static function findWhere(string $field, string $value): array|false|null
 	{
 		global $conn;
 
