@@ -24,10 +24,11 @@ class AuthController
 
 	public static function getUserEvents(): void {}
 
-	public static function handleRegistration(): OperationStatus
+	public static function handleRegistration(string $email, string $password): OperationStatus
 	{
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+		if (empty($email) || empty($password)) {
+			return new OperationStatus(false, ["error" => "Missing information. Expected Email and Password"]);
+		}
 
 		// Validate email is unique 
 
@@ -52,7 +53,10 @@ class AuthController
 
 	public static function postRegister(): void
 	{
-		$status = static::handleRegistration();
+		$email = $_POST["email"] ?? "";
+		$password = $_POST["password"] ?? "";
+
+		$status = static::handleRegistration($email, $password);
 
 		if ($status->success == false) {
 			static::getRegisterPage($status->info);
@@ -62,20 +66,54 @@ class AuthController
 
 	public static function postRegisterAPI(): void
 	{
-		$status = static::handleRegistration();
+		$data = json_decode(file_get_contents("php://input"), true);
+		$email = $data["email"] ?? "";
+		$password = $data["password"] ?? "";
 
-		if ($status->success == false) {
-			echo $status->info;
-			die();
-		} else {
-			echo $status->info;
-			die();
+		$status = static::handleRegistration($email, $password);
+
+		echo json_encode($status->info);
+	}
+
+	public static function handleLogin(): OperationStatus
+	{
+
+		$email = $_POST["email"];
+		$password = $_POST["password"];
+
+		$user = User::findWhere("email", $email);
+
+		$error = ["error" => "Invalid email and password combination"];
+
+		if ($user == null) {
+			return new OperationStatus(false, $error);
 		}
+
+		$user = new User($user);
+
+		if (password_verify($password, $user->password) == false) {
+			return new OperationStatus(false, $error);
+		}
+
+		return new OperationStatus(true, ["success" => "User successfully logged in", "api-key" => $user->apiKey]);
 	}
 
 	public static function postLogin(): void
 	{
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+		$result = static::handleLogin();
+
+		if ($result->success == false) {
+			static::getLoginPage($result->info);
+			die();
+		}
+
+		echo $result->info;
+	}
+
+	public static function postLoginAPI(): void
+	{
+		$result = static::handleLogin();
+
+		echo json_encode($result->info);
 	}
 }
