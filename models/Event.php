@@ -14,4 +14,14 @@ class Event extends Model
 	public string $endDate;
 	public float $price;
 	public string $hostEmail;
+
+	public function __construct(array $fields)
+	{
+		$this->eventID = $fields["eventID"];
+		$this->eventName = $fields["eventName"];
+		$this->startDate = $fields["startDate"];
+		$this->endDate = $fields["endDate"];
+		$this->price = $fields["price"];
+		$this->hostEmail = $fields["hostEmail"];
+	}
 }
