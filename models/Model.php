@@ -35,6 +35,18 @@ class Model
 		return $row;
 	}
 
+	public static function findWhere(string $field, string $value): array|null
+	{
+		global $conn;
+
+		$tablename = static::$table;
+
+		$sql = "SELECT FROM $tablename WHERE $field = $value";
+
+		$result = $conn->query($sql);
+		return $result->fetch_assoc();
+	}
+
 	public static function update($key, $value, array $fields): void
 	{
 
