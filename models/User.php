@@ -5,7 +5,7 @@ include_once "models/Model.php";
 class User extends Model
 {
 
-	protected string $table = "users";
+	protected string $table = "user";
 	protected string $primaryKey = "userID";
 
 	public int $id;

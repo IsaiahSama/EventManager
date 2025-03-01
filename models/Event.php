@@ -5,7 +5,7 @@ require_once "models/Model.php";
 class Event extends Model
 {
 
-	protected string $table = "events";
+	protected string $table = "event";
 	protected string $primaryKey = "eventId";
 
 	public int $eventID;
