@@ -75,11 +75,12 @@ class AuthController
 		echo json_encode($status->info);
 	}
 
-	public static function handleLogin(): OperationStatus
+	public static function handleLogin(string $email, string $password): OperationStatus
 	{
 
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+		if (empty($email) || empty($password)) {
+			return new OperationStatus(false, ["error" => "Missing information. Expected Email and Password"]);
+		}
 
 		$user = User::findWhere("email", $email);
 
@@ -100,19 +101,26 @@ class AuthController
 
 	public static function postLogin(): void
 	{
-		$result = static::handleLogin();
+		$email = $_POST["email"] ?? "";
+		$password = $_POST["password"] ?? "";
+
+		$result = static::handleLogin($email, $password);
 
 		if ($result->success == false) {
 			static::getLoginPage($result->info);
 			die();
 		}
 
-		echo $result->info;
+		echo json_encode($result->info);
 	}
 
 	public static function postLoginAPI(): void
 	{
-		$result = static::handleLogin();
+		$data = json_decode(file_get_contents("php://input"), true);
+		$email = $data["email"] ?? "";
+		$password = $data["password"] ?? "";
+
+		$result = static::handleLogin($email, $password);
 
 		echo json_encode($result->info);
 	}
