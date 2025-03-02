@@ -18,4 +18,9 @@ class OperationStatus
 
 		return new OperationStatus(false, $data);
 	}
+
+	public static function UnauthorizedUser(): OperationStatus
+	{
+		return new OperationStatus(false, ["error" => "You are not authorized to perform this action"]);
+	}
 }
