@@ -2,8 +2,11 @@
 
 class Validator
 {
-
-	public static function hasRequiredFields($fields, $data): OperationStatus
+	/**
+	 * @param array<int,mixed> $fields
+	 * @param array<int,mixed> $data
+	 */
+	public static function hasRequiredFields(array $fields, array $data): OperationStatus
 	{
 		$result = [];
 

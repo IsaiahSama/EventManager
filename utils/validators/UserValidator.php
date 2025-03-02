@@ -5,8 +5,7 @@ require_once "models/User.php";
 
 class UserValidator extends Validator
 {
-
-	public static function validateAPIKey($apiKey): OperationStatus
+	public static function validateAPIKey(string $apiKey): OperationStatus
 	{
 
 		$user = User::findWhere("apiKey", $apiKey);

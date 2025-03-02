@@ -7,6 +7,9 @@ class APIResponse implements JsonSerializable
 	public array|null|bool|string $data;
 	public string $extra;
 
+	/**
+	 * @param mixed[]|null|bool|string $data
+	 */
 	public function __construct(array|null|bool|string $data, int $statusCode = 200, string $extra = "")
 	{
 		$this->data = $data;

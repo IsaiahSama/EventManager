@@ -1,10 +1,12 @@
 <?php
 
-include_once "../utils/validators/UserValidator.php";
+include_once "utils/validators/UserValidator.php";
 
 class EventValidator extends Validator
 {
-
+	/**
+	 * @param array<string,string> $data
+	 */
 	public static function validateEventCreation(array $data): OperationStatus
 	{
 
@@ -40,6 +42,9 @@ class EventValidator extends Validator
 		return new OperationStatus(true, $eventData);
 	}
 
+	/**
+	 * @param array<string,string> $data
+	 */
 	public static function validateEventFields(array $data): OperationStatus
 	{
 		$errors = [];
@@ -74,6 +79,9 @@ class EventValidator extends Validator
 		return new OperationStatus($success, $errors, $success == true ? 200 : 400);
 	}
 
+	/**
+	 * @param array<string,string> $data
+	 */
 	public static function validateEventRegistration(array $data): OperationStatus
 	{
 		$requiredFields = ["api-key", "eventID"];
@@ -98,6 +106,9 @@ class EventValidator extends Validator
 		return new OperationStatus(true, $userValidResult->data['userID']);
 	}
 
+	/**
+	 * @param array<int,mixed> $data
+	 */
 	public static function validateEventUpdate(array $data): OperationStatus
 	{
 		$requiredFields = ["api-key", "eventID"];
@@ -130,11 +141,18 @@ class EventValidator extends Validator
 		return new OperationStatus(true, $event);
 	}
 
+	/**
+	 * @param array<string,string> $data
+	 */
 	public static function validateEventDelete(array $data): OperationStatus
 	{
 		return static::canModifyEvent(["api-key", "eventID"], $data);
 	}
 
+	/**
+	 * @param array<string,string> $fields
+	 * @param array<string,string> $data
+	 */
 	public static function canModifyEvent(array $fields, array $data): OperationStatus
 	{
 		$requiredFields = static::hasRequiredFields($fields, $data);

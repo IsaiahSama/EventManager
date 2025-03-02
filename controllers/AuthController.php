@@ -4,9 +4,10 @@ require_once "models/User.php";
 
 class AuthController
 {
-
-	// View Routes
-	public static function getRegisterPage($data = []): void
+	/**
+	 * @param array<string,string> $data
+	 */
+	public static function getRegisterPage(array $data = []): void
 	{
 		render("views/auth_register.php", $data);
 	}

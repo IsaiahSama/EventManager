@@ -6,8 +6,14 @@ class Model
 	public static string $table;
 	public static string $primaryKey;
 
+	/**
+	 * @param array<int,mixed> $fields
+	 */
 	public function __construct(array $fields) {}
 
+	/**
+	 * @param array<string,string> $fields
+	 */
 	public static function insert(array $fields): array|false|null
 	{
 		global $conn;
@@ -38,7 +44,7 @@ class Model
 		return $results->fetch_all(MYSQLI_ASSOC);
 	}
 
-	public static function find($value): array|false|null
+	public static function find(string $value): array|false|null
 	{
 
 		global $conn;
@@ -67,7 +73,10 @@ class Model
 		return $result->fetch_assoc();
 	}
 
-	public static function update($key, $value, array $fields): array|false|null
+	/**
+	 * @param array<string,string> $fields
+	 */
+	public static function update(string $key, string $value, array $fields): array|false|null
 	{
 
 		global $conn;

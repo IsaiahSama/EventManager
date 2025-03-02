@@ -6,6 +6,9 @@ class OperationStatus
 	public array|string $data;
 	public int $statusCode;
 
+	/**
+	 * @param mixed[]|string $data
+	 */
 	public function __construct(bool $success, array|string $data, int $statusCode = 200)
 	{
 		$this->success = $success;
@@ -13,6 +16,10 @@ class OperationStatus
 		$this->statusCode = $statusCode;
 	}
 
+	/**
+	 * @param array<int,mixed> $expected
+	 * @param array<int,mixed> $received
+	 */
 	public static function MissingFields(array $expected, array $received): OperationStatus
 	{
 
