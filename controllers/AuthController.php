@@ -59,7 +59,7 @@ class AuthController
 		$status = static::handleRegistration($email, $password);
 
 		if ($status->success == false) {
-			static::getRegisterPage($status->info);
+			static::getRegisterPage($status->data);
 			die();
 		}
 	}
@@ -72,7 +72,7 @@ class AuthController
 
 		$status = static::handleRegistration($email, $password);
 
-		echo json_encode($status->info);
+		echo json_encode($status->data);
 	}
 
 	public static function handleLogin(string $email, string $password): OperationStatus
@@ -107,11 +107,11 @@ class AuthController
 		$result = static::handleLogin($email, $password);
 
 		if ($result->success == false) {
-			static::getLoginPage($result->info);
+			static::getLoginPage($result->data);
 			die();
 		}
 
-		echo json_encode($result->info);
+		echo json_encode($result->data);
 	}
 
 	public static function postLoginAPI(): void
@@ -122,6 +122,6 @@ class AuthController
 
 		$result = static::handleLogin($email, $password);
 
-		echo json_encode($result->info);
+		echo json_encode($result->data);
 	}
 }
