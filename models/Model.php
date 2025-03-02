@@ -8,7 +8,7 @@ class Model
 
 	public function __construct(array $fields) {}
 
-	public static function insert(array $fields): void
+	public static function insert(array $fields): array|false|null
 	{
 		global $conn;
 
@@ -19,6 +19,10 @@ class Model
 		$sql = "INSERT INTO $tablename ($keys) VALUES ('$values')";
 
 		$conn->query($sql);
+
+		$lastId = $conn->insert_id;
+
+		return static::find($lastId);
 	}
 
 	public static function findAll(): array
