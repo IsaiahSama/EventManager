@@ -3,22 +3,24 @@
 class APIResponse implements JsonSerializable
 {
 
-	public bool $success;
+	public int $statusCode;
 	public array|null|bool|string $data;
 	public string $extra;
 
-	public function __construct(bool $success, array|null|bool|string $data, string $extra = "")
+	public function __construct(array|null|bool|string $data, int $statusCode = 200, string $extra = "")
 	{
-		$this->success = $success;
 		$this->data = $data;
+		$this->statusCode = $statusCode;
 		$this->extra = $extra;
 	}
 
 	public function jsonSerialize(): mixed
 	{
-		$result = ["success" => $this->success];
+		$result = ["status" => $this->statusCode];
 
-		if ($this->success == false) {
+		http_response_code($this->statusCode);
+
+		if ($this->statusCode >= 400) {
 			$result["error"] = $this->data;
 		} else {
 			$result['data'] = $this->data;

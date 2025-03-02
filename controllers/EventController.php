@@ -12,7 +12,7 @@ class EventController
 
 		$events = Event::findAll();
 
-		echo json_encode(new APIResponse(true, $events));
+		echo json_encode(new APIResponse($events));
 	}
 
 	public static function getEvent(string $_, string $id): void
@@ -20,11 +20,11 @@ class EventController
 		$event = Event::find($id);
 
 		if ($event == null) {
-			echo json_encode(new APIResponse(true, null, "This event does not exist."));
+			echo json_encode(new APIResponse(null, 404));
 			die();
 		}
 
-		echo json_encode(new APIResponse(true, $event));
+		echo json_encode(new APIResponse($event));
 	}
 
 	public static function createEvent(): void
@@ -33,7 +33,7 @@ class EventController
 		$result = EventValidator::validateEventCreation($data);
 
 		if ($result->success == false) {
-			echo json_encode(new APIResponse(false, $result->data));
+			echo json_encode(new APIResponse($result->data, $result->statusCode));
 			die();
 		}
 
@@ -41,7 +41,7 @@ class EventController
 
 		$event = Event::insert($eventData);
 
-		echo json_encode(new APIResponse(true, $event));
+		echo json_encode(new APIResponse($event));
 	}
 
 	public static function registerUser(string $path, string $eventID): void
@@ -52,7 +52,7 @@ class EventController
 		$result = EventValidator::validateEventRegistration($data);
 
 		if ($result->success == false) {
-			echo json_encode(new APIResponse(false, $result->data));
+			echo json_encode(new APIResponse($result->data, $result->statusCode));
 			die();
 		}
 
@@ -61,7 +61,7 @@ class EventController
 		$userEvent = UserEvent::insert(["userID" => $userID, "eventID" => $eventID]);
 		unset($userEvent["id"]);
 
-		echo json_encode(new APIResponse(true, $userEvent));
+		echo json_encode(new APIResponse($userEvent));
 	}
 
 	public static function updateEvent(string $_, string $eventID): void
@@ -72,7 +72,7 @@ class EventController
 		$result = EventValidator::validateEventUpdate($data);
 
 		if ($result->success == false) {
-			echo json_encode(new APIResponse(false, $result->data));
+			echo json_encode(new APIResponse($result->data, $result->statusCode));
 			die();
 		}
 
@@ -80,7 +80,7 @@ class EventController
 
 		$event = Event::update("eventID", $eventID, $eventData);
 
-		echo json_encode(new APIResponse(true, $event));
+		echo json_encode(new APIResponse($event));
 	}
 
 	public static function deleteEvent(string $_, string $eventID): void
@@ -92,12 +92,12 @@ class EventController
 		$result = EventValidator::validateEventDelete($data);
 
 		if ($result->success == false) {
-			echo json_encode(new APIResponse(false, $result->data));
+			echo json_encode(new APIResponse($result->data, $result->statusCode));
 			die();
 		}
 
 		Event::delete("eventID", $eventID);
 
-		echo json_encode(new APIResponse(true, ["eventID" => $eventID]));
+		echo json_encode(new APIResponse(["eventID" => $eventID]));
 	}
 }

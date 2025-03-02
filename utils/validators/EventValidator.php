@@ -71,7 +71,7 @@ class EventValidator extends Validator
 			}
 		}
 
-		return new OperationStatus($success, $errors);
+		return new OperationStatus($success, $errors, $success == true ? 200 : 400);
 	}
 
 	public static function validateEventRegistration(array $data): OperationStatus
@@ -118,7 +118,7 @@ class EventValidator extends Validator
 		}
 
 		if (empty($event)) {
-			return new OperationStatus(false, "Modifiable fields are `eventName`, `startDate`, `endDate`, and `price`. None of these were provided");
+			return new OperationStatus(false, "Modifiable fields are `eventName`, `startDate`, `endDate`, and `price`. None of these were provided", 400);
 		}
 
 		$valid = static::validateEventFields($event);
