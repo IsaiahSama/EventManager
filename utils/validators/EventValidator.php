@@ -36,14 +36,23 @@ class EventValidator extends Validator
 		// Can now create the Event
 
 		$eventData["hostEmail"] = $user["email"];
+		unset($eventData["api-key"]);
 
 		return new OperationStatus(true, $eventData);
 	}
 
-	public static function validateEventFields(array $fields): OperationStatus
+	public static function validateEventFields(array $data): OperationStatus
 	{
 		$errors = [];
+		$success = true;
 
-		return new OperationStatus(true, []);
+		foreach (["startDate", "endDate"] as $dateField) {
+			if (!preg_match('/\d{4}-\d{1,2}-\d{1,2}/', $data[$dateField])) {
+				$success = false;
+				$errors[$dateField] = "$dateField is expected to be in the form of yyyy-mm-dd";
+			}
+		}
+
+		return new OperationStatus($success, $errors);
 	}
 }
