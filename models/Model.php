@@ -21,6 +21,19 @@ class Model
 		$conn->query($sql);
 	}
 
+	public static function findAll(): array
+	{
+
+		global $conn;
+
+		$tablename = static::$table;
+
+		$sql = "SELECT * FROM $tablename";
+
+		$results = $conn->query($sql);
+		return $results->fetch_all(MYSQLI_ASSOC);
+	}
+
 	public static function find($value): array|false|null
 	{
 
