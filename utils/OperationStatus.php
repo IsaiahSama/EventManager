@@ -23,4 +23,14 @@ class OperationStatus
 	{
 		return new OperationStatus(false, "You are not authorized to perform this action");
 	}
+
+	public static function UnknownUser(): OperationStatus
+	{
+		return new OperationStatus(false, "An account could not be found. Check your details and try again");
+	}
+
+	public static function UnknownEvent(): OperationStatus
+	{
+		return new OperationStatus(false, "The event you are attempting to modify does not exist");
+	}
 }

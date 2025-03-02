@@ -12,7 +12,7 @@ class UserValidator extends Validator
 		$user = User::findWhere("apiKey", $apiKey);
 
 		if ($user == null) {
-			return OperationStatus::UnauthorizedUser();
+			return OperationStatus::UnknownUser();
 		}
 
 		return new OperationStatus(true, $user);
