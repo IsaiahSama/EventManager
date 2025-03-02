@@ -6,7 +6,7 @@ include_once "utils/validators/EventValidator.php";
 class EventController
 {
 
-	public static function getEvents()
+	public static function getEvents(): void
 	{
 
 		$events = Event::findAll();
@@ -14,7 +14,7 @@ class EventController
 		echo json_encode(new APIResponse(true, $events));
 	}
 
-	public static function getEvent(int $id)
+	public static function getEvent(int $id): void
 	{
 
 		$event = Event::find($id);
@@ -27,7 +27,7 @@ class EventController
 		echo json_encode(new APIResponse(true, $event));
 	}
 
-	public static function createEvent()
+	public static function createEvent(): void
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		$result = EventValidator::validateEventCreation($data);
@@ -43,4 +43,10 @@ class EventController
 
 		echo json_encode(new APIResponse(true, $event));
 	}
+
+	public static function registerUser(): void {}
+
+	public static function updateEvent(): void {}
+
+	public static function deleteEvent(): void {}
 }
