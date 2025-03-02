@@ -16,7 +16,14 @@ class APIResponse implements JsonSerializable
 
 	public function jsonSerialize(): mixed
 	{
-		$result = ["success" => $this->success, "data" => $this->data];
+		$result = ["success" => $this->success];
+
+		if ($this->success == false) {
+			$result["error"] = $this->data;
+		} else {
+			$result['data'] = $this->data;
+		}
+
 		if (!empty($this->extra)) {
 			$result["extra"] = $this->extra;
 		}
