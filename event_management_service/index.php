@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 include_once "router.php";
 include_once "view.php";
-include_once "data/db.php";
+include_once "../database_service/db.php";
 include_once "utils/OperationStatus.php";
 include_once "utils/APIResponse.php";
 include_once "utils/validators/Validator.php";
@@ -15,5 +15,11 @@ include_once "utils/validators/Validator.php";
 
 $uri = $_SERVER["REQUEST_URI"];
 $method = $_SERVER["REQUEST_METHOD"];
+
+if (strpos($uri, "/event_management_service") >= 0) {
+	$fragments = explode("/", $uri);
+	unset($fragments[1]);
+	$uri = implode("/", $fragments);
+}
 
 route($uri, $method);

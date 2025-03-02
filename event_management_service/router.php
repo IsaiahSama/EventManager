@@ -8,10 +8,6 @@ include_once "controllers/EventController.php";
 $routes = array();
 
 $routes["GET"] = [
-	['#^/register$#', "AuthController::getRegisterPage"],
-	['#^/login$#', "AuthController::getLoginPage"],
-	['#^/user$#', "AuthController::getUser"],
-	['#^/user/([0-9]+)/events$#', "AuthController::getUserEvents"],
 	['#^/events$#', "EventController::getEvents"],
 	['#^/events/([0-9]+)$#', "EventController::getEvent"],
 	['#^/events/create$#', "EventController::createEventPage"],
@@ -20,12 +16,7 @@ $routes["GET"] = [
 ];
 
 $routes["POST"] = [
-	['#^/register$#', "AuthController::postRegister"],
-	['#^/api/register$#', "AuthController::postRegisterAPI"],
-	['#^/login$#', "AuthController::postLogin"],
-	['#^/api/login$#', "AuthController::postLoginAPI"],
 	['#^/events$#', "EventController::createEvent"],
-	['#^/events/([0-9]+)/register$#', "EventController::registerUser"],
 ];
 
 $routes["PUT"] = [
