@@ -1,6 +1,7 @@
 <?php
 
 include_once "models/Event.php";
+include_once "models/UserEvent.php";
 include_once "utils/validators/EventValidator.php";
 
 class EventController
@@ -57,7 +58,8 @@ class EventController
 
 		$userID = $result->data;
 
-		$userEvent = UserEvents::insert(["userID" => $userID, "eventID" => $eventID]);
+		$userEvent = UserEvent::insert(["userID" => $userID, "eventID" => $eventID]);
+		unset($userEvent["id"]);
 
 		echo json_encode(new APIResponse(true, $userEvent));
 	}
