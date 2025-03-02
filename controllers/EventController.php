@@ -43,7 +43,24 @@ class EventController
 		echo json_encode(new APIResponse(true, $event));
 	}
 
-	public static function registerUser(): void {}
+	public static function registerUser(string $path, string $eventID): void
+	{
+		$data = json_decode(file_get_contents("php://input"), true);
+		$data["eventID"] = $eventID;
+
+		$result = EventValidator::validateEventRegistration($data);
+
+		if ($result->success == false) {
+			echo json_encode(new APIResponse(false, $result->data));
+			die();
+		}
+
+		$userID = $result->data;
+
+		$userEvent = UserEvents::insert(["userID" => $userID, "eventID" => $eventID]);
+
+		echo json_encode(new APIResponse(true, $userEvent));
+	}
 
 	public static function updateEvent(): void {}
 

@@ -61,6 +61,30 @@ class EventValidator extends Validator
 		return new OperationStatus($success, $errors);
 	}
 
+	public static function validateEventRegistration(array $data): OperationStatus
+	{
+		$requiredFields = ["api-key", "eventID"];
+
+		$result = static::hasRequiredFields($requiredFields, $data);
+
+		if ($result->success == false) {
+			return $result;
+		}
+
+		$userValidResult = UserValidator::validateAPIKey($data["api-key"]);
+		if ($userValidResult->success == false) {
+			return $userValidResult;
+		}
+
+		$eventData = Event::find($data["eventID"]);
+
+		if ($eventData == null) {
+			return OperationStatus::UnknownEvent();
+		}
+
+		return new OperationStatus(true, $eventData);
+	}
+
 	public static function canModifyEvent(string $apiKey, int $eventID): OperationStatus
 	{
 		$user = User::findWhere("apiKey", $apiKey);
