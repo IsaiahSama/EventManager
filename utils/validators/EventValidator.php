@@ -21,7 +21,7 @@ class EventValidator extends Validator
 
 		$validEventDataResult = static::validateEventFields($eventData);
 
-		if ($validEventDataResult == false) {
+		if ($validEventDataResult->success == false) {
 			return $validEventDataResult;
 		}
 
@@ -46,10 +46,15 @@ class EventValidator extends Validator
 		$errors = [];
 		$success = true;
 
+		if (!preg_match('/^\d{1,7}\.\d{2}$/', $data["price"])) {
+			$success = false;
+			$errors["price"] = "`price` is expected to satisfy the expression: ^[0-9]{1,7}.[0-9]{2}$";
+		}
+
 		foreach (["startDate", "endDate"] as $dateField) {
 			if (!preg_match('/\d{4}-\d{1,2}-\d{1,2}/', $data[$dateField])) {
 				$success = false;
-				$errors[$dateField] = "$dateField is expected to be in the form of yyyy-mm-dd";
+				$errors[$dateField] = "`$dateField` is expected to be in the form of yyyy-mm-dd";
 			}
 		}
 
