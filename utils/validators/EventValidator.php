@@ -60,4 +60,25 @@ class EventValidator extends Validator
 
 		return new OperationStatus($success, $errors);
 	}
+
+	public static function canModifyEvent(string $apiKey, int $eventID): OperationStatus
+	{
+		$user = User::findWhere("apiKey", $apiKey);
+
+		if ($user == null) {
+			return OperationStatus::UnknownUser();
+		}
+
+		$event = Event::find($eventID);
+
+		if ($event == null) {
+			return OperationStatus::UnknownEvent();
+		}
+
+		if ($user["email"] == $event["hostEmail"]) {
+			return OperationStatus::UnauthorizedUser();
+		}
+
+		return new OperationStatus(true, $eventID);
+	}
 }
