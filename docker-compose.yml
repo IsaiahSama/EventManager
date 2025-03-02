@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  auth_service:
+    build: ./auth_service
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+  event_service:
+    build: ./event_service
+    ports:
+      - "8082:80"
+    depends_on:
+      - db
+
+  user_registration_service:
+    build: ./user_registration_service
+    ports:
+      - "8083:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    container_name: db
+    ports:
+      - "6033:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: event_management
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    restart: always
+    ports:
+      - "8084:80"
+
+volumes:
+  dbdata:
