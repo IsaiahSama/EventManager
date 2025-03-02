@@ -82,7 +82,7 @@ class EventValidator extends Validator
 			return OperationStatus::UnknownEvent();
 		}
 
-		return new OperationStatus(true, $eventData);
+		return new OperationStatus(true, $userValidResult->data['userID']);
 	}
 
 	public static function canModifyEvent(string $apiKey, int $eventID): OperationStatus
