@@ -131,6 +131,11 @@ class EventValidator extends Validator
 		return new OperationStatus(true, $event);
 	}
 
+	public static function validateEventDelete(array $data): OperationStatus
+	{
+		return static::canModifyEvent(["api-key", "eventID"], $data);
+	}
+
 	public static function canModifyEvent(array $fields, array $data): OperationStatus
 	{
 		$requiredFields = static::hasRequiredFields($fields, $data);

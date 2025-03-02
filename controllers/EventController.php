@@ -83,5 +83,21 @@ class EventController
 		echo json_encode(new APIResponse(true, $event));
 	}
 
-	public static function deleteEvent(): void {}
+	public static function deleteEvent(string $_, string $eventID): void
+	{
+
+		$data = json_decode(file_get_contents("php://input"), true);
+		$data["eventID"] = $eventID;
+
+		$result = EventValidator::validateEventDelete($data);
+
+		if ($result->success == false) {
+			echo json_encode(new APIResponse(false, $result->data));
+			die();
+		}
+
+		Event::delete("eventID", $eventID);
+
+		echo json_encode(new APIResponse(true, ["eventID" => $eventID]));
+	}
 }
