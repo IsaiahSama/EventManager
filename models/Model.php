@@ -67,22 +67,24 @@ class Model
 		return $result->fetch_assoc();
 	}
 
-	public static function update($key, $value, array $fields): void
+	public static function update($key, $value, array $fields): array|false|null
 	{
 
 		global $conn;
 
 		$tablename = static::$table;
 
-		$callback = fn(string $k, string $v): string => "$k TO $v";
+		$callback = fn(string $k, string $v): string => "$k = \"$v\"";
 
 		$entries = array_map($callback, array_keys($fields), array_values($fields));
 
-		$records = implode(",", $entries);
+		$records = implode(", ", $entries);
 
-		$sql = "UPDATE $tablename SET ($records) WHERE $key = '$value'";
+		$sql = "UPDATE $tablename SET $records WHERE $key = '$value'";
 
 		$conn->query($sql);
+
+		return static::findWhere($key, $value);
 	}
 
 	public static function delete(string $field, string $value): void

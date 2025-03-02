@@ -46,15 +46,29 @@ class EventValidator extends Validator
 		$errors = [];
 		$success = true;
 
-		if (!preg_match('/^\d{1,7}\.\d{2}$/', $data["price"])) {
-			$success = false;
-			$errors["price"] = "`price` is expected to satisfy the expression: ^[0-9]{1,7}.[0-9]{2}$";
+		if (isset($data['eventName'])) {
+			if (strlen($data['eventName']) > 100) {
+				$success = false;
+				$errors["eventName"] = "`event name` is far too long.";
+			}
 		}
 
-		foreach (["startDate", "endDate"] as $dateField) {
-			if (!preg_match('/\d{4}-\d{1,2}-\d{1,2}/', $data[$dateField])) {
+		if (isset($data["price"])) {
+			if (!preg_match('/^\d{1,7}\.\d{2}$/', $data["price"])) {
 				$success = false;
-				$errors[$dateField] = "`$dateField` is expected to be in the form of yyyy-mm-dd";
+				$errors["price"] = "`price` is expected to satisfy the expression: ^[0-9]{1,7}.[0-9]{2}$";
+			}
+		}
+
+		if (isset($data["startDate"]) || isset($data["endDate"])) {
+			foreach (["startDate", "endDate"] as $dateField) {
+				if (!isset($data[$dateField])) {
+					continue;
+				}
+				if (!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/', $data[$dateField])) {
+					$success = false;
+					$errors[$dateField] = "`$dateField` is expected to be in the form of yyyy-mm-dd";
+				}
 			}
 		}
 
@@ -85,8 +99,48 @@ class EventValidator extends Validator
 		return new OperationStatus(true, $userValidResult->data['userID']);
 	}
 
-	public static function canModifyEvent(string $apiKey, int $eventID): OperationStatus
+	public static function validateEventUpdate(array $data): OperationStatus
 	{
+		$requiredFields = ["api-key", "eventID"];
+		$modifyPerms = static::canModifyEvent($requiredFields, $data);
+
+		if ($modifyPerms->success == false) {
+			return $modifyPerms;
+		}
+
+		$modifiableFields = ["eventName", "startDate", "endDate", "price"];
+
+		$event = [];
+
+		foreach ($modifiableFields as $field) {
+			if (isset($data[$field])) {
+				$event[$field] = $data[$field];
+			}
+		}
+
+		if (empty($event)) {
+			return new OperationStatus(false, "Modifiable fields are `eventName`, `startDate`, `endDate`, and `price`. None of these were provided");
+		}
+
+		$valid = static::validateEventFields($event);
+
+		if ($valid->success == false) {
+			return $valid;
+		}
+
+		return new OperationStatus(true, $event);
+	}
+
+	public static function canModifyEvent(array $fields, array $data): OperationStatus
+	{
+		$requiredFields = static::hasRequiredFields($fields, $data);
+		if ($requiredFields->success == false) {
+			return $requiredFields;
+		}
+
+		$apiKey = $data["api-key"];
+		$eventID = $data["eventID"];
+
 		$user = User::findWhere("apiKey", $apiKey);
 
 		if ($user == null) {
@@ -99,10 +153,10 @@ class EventValidator extends Validator
 			return OperationStatus::UnknownEvent();
 		}
 
-		if ($user["email"] == $event["hostEmail"]) {
+		if ($user["email"] != $event["hostEmail"]) {
 			return OperationStatus::UnauthorizedUser();
 		}
 
-		return new OperationStatus(true, $eventID);
+		return new OperationStatus(true, $user["userID"]);
 	}
 }

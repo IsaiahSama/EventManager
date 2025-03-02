@@ -64,7 +64,24 @@ class EventController
 		echo json_encode(new APIResponse(true, $userEvent));
 	}
 
-	public static function updateEvent(): void {}
+	public static function updateEvent(string $_, string $eventID): void
+	{
+		$data = json_decode(file_get_contents("php://input"), true);
+		$data["eventID"] = $eventID;
+
+		$result = EventValidator::validateEventUpdate($data);
+
+		if ($result->success == false) {
+			echo json_encode(new APIResponse(false, $result->data));
+			die();
+		}
+
+		$eventData = $result->data;
+
+		$event = Event::update("eventID", $eventID, $eventData);
+
+		echo json_encode(new APIResponse(true, $event));
+	}
 
 	public static function deleteEvent(): void {}
 }
