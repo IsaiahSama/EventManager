@@ -6,7 +6,7 @@ class Event extends Model
 {
 
 	public static string $table = "event";
-	public static string $primaryKey = "eventId";
+	public static string $primaryKey = "eventID";
 
 	public int $eventID;
 	public string $eventName;

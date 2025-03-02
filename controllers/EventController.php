@@ -14,9 +14,8 @@ class EventController
 		echo json_encode(new APIResponse(true, $events));
 	}
 
-	public static function getEvent(int $id): void
+	public static function getEvent(string $_, string $id): void
 	{
-
 		$event = Event::find($id);
 
 		if ($event == null) {
