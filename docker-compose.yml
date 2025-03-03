@@ -1,12 +1,31 @@
 version: '3.8'
 
 services:
+
+  reverse-proxy:
+    image: "jwilder/nginx-proxy:latest"
+    container_name: "reverse-proxy"
+    volumes:
+      - "html:/usr/share/nginx/html"
+      - "dhparam:/etc/nginx/dhparam"
+      - "vhost:/etc/nginx/vhost.d"
+      - "certs:/etc/nginx/certs"
+      - "/run/docker.sock:/tmp/docker.sock:ro"
+    restart: "always"
+    networks: 
+      - "net"
+    ports:
+      - "80:80"
+      - "443:443"  
+
   auth_service:
     build: ./auth_service
     ports:
       - "8081:80"
     depends_on:
       - db
+    networks: 
+      - "net"
 
   event_service:
     build: ./event_management_service
@@ -14,6 +33,8 @@ services:
       - "8082:80"
     depends_on:
       - db
+    networks: 
+      - "net"
 
   user_registration_service:
     build: ./user_registration_service
@@ -21,6 +42,8 @@ services:
       - "8083:80"
     depends_on:
       - db
+    networks: 
+      - "net"
 
   db:
     image: mysql:latest
@@ -32,6 +55,8 @@ services:
       MYSQL_DATABASE: scalable_assignment
     volumes:
       - dbdata:/var/lib/mysql
+    networks: 
+      - "net"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -42,6 +67,16 @@ services:
     restart: always
     ports:
       - "8084:80"
+    networks: 
+      - "net"
 
 volumes:
   dbdata:
+  certs:
+  html:
+  vhost:
+  dhparam:
+
+networks:
+  net:
+    external: true
