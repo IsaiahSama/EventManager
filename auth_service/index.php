@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 include_once "router.php";
 include_once "view.php";
-include_once "../database_service/db.php";
+include_once "db.php";
 include_once "utils/OperationStatus.php";
 include_once "utils/APIResponse.php";
 include_once "utils/validators/Validator.php";
