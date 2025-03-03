@@ -22,4 +22,6 @@ if (strpos($uri, "/auth_service") != false) {
 	$uri = implode("/", $fragments);
 }
 
+$uri = rtrim($uri, "/\\");
+
 route($uri, $method);

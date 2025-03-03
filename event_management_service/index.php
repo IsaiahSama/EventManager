@@ -22,4 +22,7 @@ if (strpos($uri, "/event_management_service") != false) {
 	$uri = implode("/", $fragments);
 }
 
+$uri = rtrim($uri, "/\\");
+
+
 route($uri, $method);

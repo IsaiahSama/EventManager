@@ -22,4 +22,6 @@ if (strpos($uri, "/user_registration_service") != false) {
 	$uri = implode("/", $fragments);
 }
 
+$uri = rtrim($uri, "/\\");
+
 route($uri, $method);
