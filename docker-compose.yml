@@ -9,7 +9,7 @@ services:
       - db
 
   event_service:
-    build: ./event_service
+    build: ./event_management_service
     ports:
       - "8082:80"
     depends_on:
@@ -29,7 +29,7 @@ services:
       - "6033:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: event_management
+      MYSQL_DATABASE: scalable_assignment
     volumes:
       - dbdata:/var/lib/mysql
 

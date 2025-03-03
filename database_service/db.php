@@ -1,8 +1,8 @@
 <?php
 
-$servername = "localhost";
+$servername = "db";
 $username = "root";
-$password = "";
+$password = "db";
 $database = "scalable_assignment";
 
 $conn = new mysqli($servername, $username, $password, $database);
