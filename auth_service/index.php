@@ -16,7 +16,7 @@ include_once "utils/validators/Validator.php";
 $uri = $_SERVER["REQUEST_URI"];
 $method = $_SERVER["REQUEST_METHOD"];
 
-if (strpos($uri, "/auth_service") >= 0) {
+if (strpos($uri, "/auth_service") != false) {
 	$fragments = explode("/", $uri);
 	unset($fragments[1]);
 	$uri = implode("/", $fragments);
