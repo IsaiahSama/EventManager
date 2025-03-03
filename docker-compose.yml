@@ -9,10 +9,13 @@ services:
     depends_on:
       - db
 
-  event_service:
+  event_service1:
     build: ./event_management_service
-    ports:
-      - "8082:80"
+    depends_on:
+      - db
+
+  event_service2:
+    build: ./event_management_service
     depends_on:
       - db
 
@@ -22,6 +25,14 @@ services:
       - "8083:80"
     depends_on:
       - db
+
+  load_balancer:
+    build: ./load_balancer
+    ports:
+      - "8080:80"
+    depends_on:
+      - event_service1
+      - event_service2
 
   db:
     image: mysql:latest
