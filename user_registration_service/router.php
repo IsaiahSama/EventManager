@@ -8,11 +8,13 @@ include_once "controllers/EventController.php";
 $routes = array();
 
 $routes["GET"] = [
+	// User ID
 	['#^/user/([0-9]+)/events$#', "AuthController::getUserEvents"],
 ];
 
 $routes["POST"] = [
-	['#^/events/([0-9]+)/register$#', "EventController::registerUser"],
+	// Event ID
+	['#^/user/events/([0-9]+)/register$#', "EventController::registerUser"],
 ];
 
 $routes["PUT"] = [];

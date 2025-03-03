@@ -7,16 +7,12 @@ include_once "controllers/AuthController.php";
 $routes = array();
 
 $routes["GET"] = [
-	['#^/register$#', "AuthController::getRegisterPage"],
-	['#^/login$#', "AuthController::getLoginPage"],
-	['#^/user$#', "AuthController::getUser"],
+	['#^/auth/user$#', "AuthController::getUser"],
 ];
 
 $routes["POST"] = [
-	['#^/register$#', "AuthController::postRegister"],
-	['#^/api/register$#', "AuthController::postRegisterAPI"],
-	['#^/login$#', "AuthController::postLogin"],
-	['#^/api/login$#', "AuthController::postLoginAPI"],
+	['#^/auth/register$#', "AuthController::postRegisterAPI"],
+	['#^/auth/login$#', "AuthController::postLoginAPI"],
 ];
 
 $routes["PUT"] = [];

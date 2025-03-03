@@ -35,7 +35,7 @@ function route($uri, $method)
 	$matches = [];
 	foreach ($paths as $path) {
 		if (preg_match($path[0], $uri, $matches)) {
-			call_user_func_array($path[1], $matches);
+			call_user_func_array($path[1], array_slice($matches, 1));
 			return;
 		}
 	}
