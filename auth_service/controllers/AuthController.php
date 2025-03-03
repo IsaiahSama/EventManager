@@ -5,7 +5,7 @@ require_once "models/User.php";
 class AuthController
 {
 	/**
-	 * @param array<string,string> $data
+	 * @param array<mixed,mixed> $data
 	 */
 	public static function getRegisterPage(array $data = []): void
 	{

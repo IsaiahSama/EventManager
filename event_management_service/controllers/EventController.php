@@ -15,7 +15,7 @@ class EventController
 		echo json_encode(new APIResponse($events));
 	}
 
-	public static function getEvent(string $_, string $id): void
+	public static function getEvent(string $id): void
 	{
 		$event = Event::find($id);
 
@@ -64,7 +64,7 @@ class EventController
 		echo json_encode(new APIResponse($userEvent));
 	}
 
-	public static function updateEvent(string $_, string $eventID): void
+	public static function updateEvent(string $eventID): void
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		$data["eventID"] = $eventID;
@@ -83,7 +83,7 @@ class EventController
 		echo json_encode(new APIResponse($event));
 	}
 
-	public static function deleteEvent(string $_, string $eventID): void
+	public static function deleteEvent(string $eventID): void
 	{
 
 		$data = json_decode(file_get_contents("php://input"), true);
