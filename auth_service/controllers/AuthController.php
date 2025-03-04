@@ -9,38 +9,16 @@ class AuthController
 
 	public static function getUser(): void
 	{
-		$path = parse_url($_SERVER["REQUEST_URI"]);
-		if (!isset($path["query"])) {
-			echo json_encode(new APIResponse("Expected query paramter in form 'api-key' containing your api key", 400));
-			die();
-		}
-		$queryStr = $path["query"];
+		$validRequestResult = UserValidator::validateAPIKeyFromParam();
 
-		$queries = explode("&", $queryStr);
-
-		$queryItems = [];
-
-		foreach ($queries as $query) {
-			$params = explode("=", $query);
-			$queryItems[$params[0]] = $params[1];
-		}
-
-		if (!isset($queryItems["api-key"])) {
-			echo json_encode(new APIResponse("Expected query paramter in form 'api-key' containing your api key", 400));
+		if ($validRequestResult->success == false) {
+			echo json_encode(new APIResponse($validRequestResult->data, $validRequestResult->statusCode));
 			die();
 		}
 
-		$apiKey = $queryItems["api-key"];
-		$user = User::findWhere("apiKey", $apiKey);
+		$user = $validRequestResult->data;
 
-		if ($user == null) {
-			$response = OperationStatus::UnauthorizedUser();
-			echo json_encode(new APIResponse($response->data, $response->statusCode));
-			die();
-		}
-
-		unset($user['password']);
-		echo json_encode(new APIResponse($user));
+		echo json_encode(new APIResponse($user, 200));
 	}
 
 	public static function handleRegistration(string $email, string $password): OperationStatus
