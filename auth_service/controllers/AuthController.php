@@ -10,13 +10,43 @@ class AuthController
 	public static function getUser(): void
 	{
 		$path = parse_url($_SERVER["REQUEST_URI"]);
-		echo json_encode($path);
+		if (!isset($path["query"])) {
+			echo json_encode(new APIResponse("Expected query paramter in form 'api-key' containing your api key", 400));
+			die();
+		}
+		$queryStr = $path["query"];
+
+		$queries = explode("&", $queryStr);
+
+		$queryItems = [];
+
+		foreach ($queries as $query) {
+			$params = explode("=", $query);
+			$queryItems[$params[0]] = $params[1];
+		}
+
+		if (!isset($queryItems["api-key"])) {
+			echo json_encode(new APIResponse("Expected query paramter in form 'api-key' containing your api key", 400));
+			die();
+		}
+
+		$apiKey = $queryItems["api-key"];
+		$user = User::findWhere("apiKey", $apiKey);
+
+		if ($user == null) {
+			$response = OperationStatus::UnauthorizedUser();
+			echo json_encode(new APIResponse($response->data, $response->statusCode));
+			die();
+		}
+
+		unset($user['password']);
+		echo json_encode(new APIResponse($user));
 	}
 
 	public static function handleRegistration(string $email, string $password): OperationStatus
 	{
 		if (empty($email) || empty($password)) {
-			return new OperationStatus(false, ["error" => "Missing information. Expected Email and Password"]);
+			return OperationStatus::MissingFields(["email", "received"], []);
 		}
 
 		// Validate email is unique 

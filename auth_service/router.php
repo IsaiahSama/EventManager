@@ -7,7 +7,7 @@ include_once "controllers/AuthController.php";
 $routes = array();
 
 $routes["GET"] = [
-	['#^/auth/user$#', "AuthController::getUser"],
+	['#^/auth/user#', "AuthController::getUser"],
 ];
 
 $routes["POST"] = [
