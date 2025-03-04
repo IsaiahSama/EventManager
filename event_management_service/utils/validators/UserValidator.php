@@ -21,7 +21,7 @@ class UserValidator extends Validator
 	{
 		$path = parse_url($_SERVER["REQUEST_URI"]);
 		if (!isset($path["query"])) {
-			return OperationStatus::MissingFields(["api-key as a query parameter"], []);
+			return OperationStatus::MissingFields(["api-key as a query parameter"], ["nothing"]);
 		}
 
 		$queryStr = $path["query"];
@@ -36,7 +36,7 @@ class UserValidator extends Validator
 		}
 
 		if (!isset($queryItems["api-key"])) {
-			return OperationStatus::MissingFields(["api-key as a query parameter"], []);
+			return OperationStatus::MissingFields(["api-key as a query parameter"], array_keys($queryItems));
 		}
 
 		$apiKey = $queryItems["api-key"];

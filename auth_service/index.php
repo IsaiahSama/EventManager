@@ -10,6 +10,7 @@ include_once "db.php";
 include_once "utils/OperationStatus.php";
 include_once "utils/APIResponse.php";
 include_once "utils/validators/Validator.php";
+include_once "utils/validators/UserValidator.php";
 
 # $uri = explode("/", $_SERVER["REQUEST_URI"]);
 
