@@ -68,9 +68,9 @@ class Model
 
 		$sql = "SELECT * FROM $tablename WHERE $field = '$value'";
 
-		$result = $conn->query($sql);
+		$results = $conn->query($sql);
 
-		return $result->fetch_assoc();
+		return $results->fetch_all(MYSQLI_ASSOC);
 	}
 
 	/**
