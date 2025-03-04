@@ -14,7 +14,21 @@ class UserValidator extends Validator
 			return OperationStatus::UnknownUser();
 		}
 
+		unset($user["password"]);
+
 		return new OperationStatus(true, $user);
+	}
+
+	public static function validateAPIKeyFromInput(): OperationStatus
+	{
+
+		$data = json_decode(file_get_contents("php://input"), true);
+
+		if (!isset($data["api-key"])) {
+			return OperationStatus::MissingFields(["api-key"], ["none"]);
+		}
+
+		return static::validateAPIKey($data["api-key"]);
 	}
 
 	public static function validateAPIKeyFromParam(): OperationStatus
@@ -40,13 +54,6 @@ class UserValidator extends Validator
 		}
 
 		$apiKey = $queryItems["api-key"];
-		$user = User::findWhere("apiKey", $apiKey);
-
-		if ($user == null) {
-			return OperationStatus::UnauthorizedUser();
-		}
-
-		unset($user['password']);
-		return new OperationStatus(true, $user, 200);
+		return static::validateAPIKey($apiKey);
 	}
 }
