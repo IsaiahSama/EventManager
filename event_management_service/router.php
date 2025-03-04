@@ -2,7 +2,6 @@
 
 // This file will be responsible for creating the endpoints to be used.
 
-include_once "controllers/AuthController.php";
 include_once "controllers/EventController.php";
 
 $routes = array();
@@ -10,9 +9,6 @@ $routes = array();
 $routes["GET"] = [
 	['#^/events$#', "EventController::getEvents"],
 	['#^/events/([0-9]+)$#', "EventController::getEvent"],
-	['#^/events/create$#', "EventController::createEventPage"],
-	['#^/events/edit/([0-9]+)$#', "EventController::editEventPage"],
-	['#^/events/delete/([0-9]+)$#', "EventController::deleteEventPage"],
 ];
 
 $routes["POST"] = [

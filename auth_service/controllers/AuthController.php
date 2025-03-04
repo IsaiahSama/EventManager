@@ -4,25 +4,10 @@ require_once "models/User.php";
 
 class AuthController
 {
-	/**
-	 * @param array<mixed,mixed> $data
-	 */
-	public static function getRegisterPage(array $data = []): void
-	{
-		render("views/auth_register.php", $data);
-	}
-
-	public static function getLoginPage(): void
-	{
-		render("views/auth_register.php");
-	}
-
 
 	// API and Request Handlers
 
 	public static function getUser(): void {}
-
-	public static function getUserEvents(): void {}
 
 	public static function handleRegistration(string $email, string $password): OperationStatus
 	{
@@ -49,19 +34,6 @@ class AuthController
 		User::insert(["email" => $email, "password" => $hashed_password, "apiKey" => $apiKey]);
 
 		return new OperationStatus(true, ["success" => "User was successfully created"]);
-	}
-
-	public static function postRegister(): void
-	{
-		$email = $_POST["email"] ?? "";
-		$password = $_POST["password"] ?? "";
-
-		$status = static::handleRegistration($email, $password);
-
-		if ($status->success == false) {
-			static::getRegisterPage($status->data);
-			die();
-		}
 	}
 
 	public static function postRegisterAPI(): void
@@ -97,21 +69,6 @@ class AuthController
 		}
 
 		return new OperationStatus(true, ["success" => "User successfully logged in", "api-key" => $user->apiKey]);
-	}
-
-	public static function postLogin(): void
-	{
-		$email = $_POST["email"] ?? "";
-		$password = $_POST["password"] ?? "";
-
-		$result = static::handleLogin($email, $password);
-
-		if ($result->success == false) {
-			static::getLoginPage($result->data);
-			die();
-		}
-
-		echo json_encode($result->data);
 	}
 
 	public static function postLoginAPI(): void
