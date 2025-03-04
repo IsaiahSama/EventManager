@@ -2,10 +2,13 @@ version: '3.8'
 
 services:
 
-  auth_service:
+  auth_service1:
     build: ./auth_service
-    ports:
-      - "8081:80"
+    depends_on:
+      - db
+
+  auth_service2:
+    build: ./auth_service
     depends_on:
       - db
 
@@ -19,10 +22,13 @@ services:
     depends_on:
       - db
 
-  user_registration_service:
+  user_registration_service1:
     build: ./user_registration_service
-    ports:
-      - "8083:80"
+    depends_on:
+      - db
+
+  user_registration_service2:
+    build: ./user_registration_service
     depends_on:
       - db
 
@@ -33,6 +39,10 @@ services:
     depends_on:
       - event_service1
       - event_service2
+      - auth_service1
+      - auth_service2
+      - user_registration_service1
+      - user_registration_service2
 
   db:
     image: mysql:latest
