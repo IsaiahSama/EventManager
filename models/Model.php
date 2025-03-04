@@ -60,7 +60,7 @@ class Model
 		return $row;
 	}
 
-	public static function findWhere(string $field, string $value): array|false|null
+	public static function findWhere(string $field, string $value, int $limit = 1): array|false|null
 	{
 		global $conn;
 
@@ -69,6 +69,10 @@ class Model
 		$sql = "SELECT * FROM $tablename WHERE $field = '$value'";
 
 		$results = $conn->query($sql);
+
+		if ($limit == 1) {
+			return $results->fetch_assoc();
+		}
 
 		return $results->fetch_all(MYSQLI_ASSOC);
 	}
