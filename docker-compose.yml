@@ -22,12 +22,12 @@ services:
     depends_on:
       - db
 
-  user_registration_service1:
+  user_service1:
     build: ./user_registration_service
     depends_on:
       - db
 
-  user_registration_service2:
+  user_service2:
     build: ./user_registration_service
     depends_on:
       - db
@@ -41,8 +41,8 @@ services:
       - event_service2
       - auth_service1
       - auth_service2
-      - user_registration_service1
-      - user_registration_service2
+      - user_service1
+      - user_service2
 
   db:
     image: mysql:latest

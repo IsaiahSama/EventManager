@@ -7,7 +7,11 @@ class AuthController
 
 	// API and Request Handlers
 
-	public static function getUser(): void {}
+	public static function getUser(): void
+	{
+		$path = parse_url($_SERVER["REQUEST_URI"]);
+		echo json_encode($path);
+	}
 
 	public static function handleRegistration(string $email, string $password): OperationStatus
 	{
