@@ -9,12 +9,12 @@ $routes = array();
 
 $routes["GET"] = [
 	// User ID
-	['#^/user/([0-9]+)/events$#', "AuthController::getUserEvents"],
+	['#^/users/([0-9]+)/events#', "AuthController::getUserEvents"],
 ];
 
 $routes["POST"] = [
 	// Event ID
-	['#^/user/events/([0-9]+)/register$#', "EventController::registerUser"],
+	['#^/users/events/([0-9]+)/register$#', "EventController::registerUser"],
 ];
 
 $routes["PUT"] = [];
