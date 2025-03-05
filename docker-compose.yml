@@ -2,47 +2,35 @@ version: '3.8'
 
 services:
 
-  auth_service1:
+  auth_service:
     build: ./auth_service
     depends_on:
       - db
+    deploy:
+      replicas: 2
 
-  auth_service2:
-    build: ./auth_service
-    depends_on:
-      - db
-
-  event_service1:
+  event_service:
     build: ./event_management_service
     depends_on:
       - db
+    deploy:
+      replicas: 2
 
-  event_service2:
-    build: ./event_management_service
-    depends_on:
-      - db
-
-  user_service1:
+  user_service:
     build: ./user_registration_service
     depends_on:
       - db
-
-  user_service2:
-    build: ./user_registration_service
-    depends_on:
-      - db
+    deploy:
+      replicas: 2
 
   load_balancer:
     build: ./load_balancer
     ports:
       - "8080:80"
     depends_on:
-      - event_service1
-      - event_service2
-      - auth_service1
-      - auth_service2
-      - user_service1
-      - user_service2
+      - event_service
+      - auth_service
+      - user_service
 
   db:
     image: mysql:latest
