@@ -51,7 +51,7 @@ class Model
 		$results = $conn->query($sql);
 		$allResults = $results->fetch_all(MYSQLI_ASSOC);
 
-		$redis->setex(static::$cacheName, 10, json_encode($allResults));
+		$redis->setex(static::$cacheName, 300, json_encode($allResults));
 
 		return $allResults;
 	}
