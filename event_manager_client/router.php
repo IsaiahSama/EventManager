@@ -7,13 +7,23 @@ include_once "controllers/FrontController.php";
 $routes = array();
 
 $routes["GET"] = [
-	// User ID
-	['#^/users/([0-9]+)/events#', "AuthController::getUserEvents"],
+	["#^/register$#", "FrontController::getRegisterPage"],
+	["#^/login$#", "FrontController::getLoginPage"],
+	["#^/event/create$#", "FrontController::getEventCreatePage"],
+	["#^/event/update#", "FrontController::getEventUpdatePage"],
+	["#^/event/([0-9]+)$#", "FrontController::viewEventPage"],
+	["#^/event/all$#", "FrontController::viewEventsPage"],
+	["#^/user/events$#", "FrontController::getUserEventsPage"],
+	["#^/user/event/register$#", "FrontController::getUserEventRegisterPage"],
 ];
 
 $routes["POST"] = [
 	// Event ID
-	['#^/users/events/([0-9]+)/register$#', "EventController::registerUser"],
+	["#^/register$#", "FrontController::postRegister"],
+	["#^/login$#", "FrontController::postLogin"],
+	["#^/event/create$#", "FrontController::postEventCreate"],
+	["#^/event/([0-9]+)/update#", "FrontController::postEventUpdate"],
+	["#^/user/event/([0-9]+)/register#", "FrontController::postUserEventRegister"],
 ];
 
 function route($uri, $method)
