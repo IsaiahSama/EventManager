@@ -5,7 +5,7 @@ services:
   web_client:
     build: ./event_manager_client
     ports:
-      - "80:80"
+      - "8080:80"
 
   auth_service:
     build: ./event_manager_api/auth_service
@@ -31,7 +31,7 @@ services:
   load_balancer:
     build: ./event_manager_api/load_balancer
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       - event_service
       - auth_service
@@ -40,7 +40,7 @@ services:
   redis:
     image: redis:latest
     volumes:
-      - ./caching_service/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./event_manager_api/caching_service/redis.conf:/usr/local/etc/redis/redis.conf
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     ports:
       - "6379:6379"
