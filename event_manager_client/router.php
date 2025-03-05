@@ -2,8 +2,7 @@
 
 // This file will be responsible for creating the endpoints to be used.
 
-include_once "controllers/AuthController.php";
-include_once "controllers/EventController.php";
+include_once "controllers/FrontController.php";
 
 $routes = array();
 
@@ -16,10 +15,6 @@ $routes["POST"] = [
 	// Event ID
 	['#^/users/events/([0-9]+)/register$#', "EventController::registerUser"],
 ];
-
-$routes["PUT"] = [];
-
-$routes["DELETE"] = [];
 
 function route($uri, $method)
 {
