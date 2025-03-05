@@ -2,7 +2,7 @@
 
 // This file will be responsible for creating the endpoints to be used.
 
-include_once "controllers/FrontController.php";
+include_once "FrontController.php";
 
 $routes = array();
 
