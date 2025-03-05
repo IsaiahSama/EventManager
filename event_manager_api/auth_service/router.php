@@ -32,5 +32,6 @@ function route($uri, $method)
 		}
 	}
 
-	render("views/errors/404.php");
+	echo json_encode(new APIResponse(["message" => "Not Found", "routes" => $routes], 404));
+	die();
 }
