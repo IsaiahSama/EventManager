@@ -32,6 +32,14 @@ services:
       - auth_service
       - user_service
 
+  redis:
+    image: redis:latest
+    volumes:
+      - ./caching_service/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+
   db:
     image: mysql:latest
     container_name: db

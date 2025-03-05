@@ -7,6 +7,8 @@ class Event extends Model
 
 	public static string $table = "event";
 	public static string $primaryKey = "eventID";
+	public static string $cacheName = "events";
+
 
 	public int $eventID;
 	public string $eventName;

@@ -9,6 +9,7 @@ class User extends Model
 
 	public static string $table = "user";
 	public static string $primaryKey = "userID";
+	public static string $cacheName = "users";
 
 	public int $userID;
 	public string $email;

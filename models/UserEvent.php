@@ -7,6 +7,7 @@ class UserEvent extends Model
 
 	public static string $table = "user_event";
 	public static string $primaryKey = "id";
+	public static string $cacheName = "userEvents";
 
 	public string $userID;
 	public string $eventID;

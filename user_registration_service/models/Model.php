@@ -5,6 +5,7 @@ class Model
 
 	public static string $table;
 	public static string $primaryKey;
+	public static string $cacheName;
 
 	/**
 	 * @param array<int,mixed> $fields
@@ -33,6 +34,13 @@ class Model
 
 	public static function findAll(): array
 	{
+		$redis = new Redis();
+		$redis->connect('redis', 6379);
+
+		$cachedField = $redis->get(static::$cacheName);
+		if ($cachedField) {
+			return $cachedField;
+		}
 
 		global $conn;
 
@@ -41,7 +49,11 @@ class Model
 		$sql = "SELECT * FROM $tablename";
 
 		$results = $conn->query($sql);
-		return $results->fetch_all(MYSQLI_ASSOC);
+		$allResults = $results->fetch_all(MYSQLI_ASSOC);
+
+		$redis->setex(static::$cacheName, 300, json_encode($allResults));
+
+		return $allResults;
 	}
 
 	public static function find(string $value): array|false|null
