@@ -2,8 +2,11 @@
 
 class FrontController
 {
-
 	// Get Methods
+
+	/**
+	 * @param array<int,mixed> $data
+	 */
 	public static function getRegisterPage(array $data = []): void
 	{
 		render("views/auth_register", $data);

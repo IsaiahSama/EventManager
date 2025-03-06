@@ -1,4 +1,4 @@
-<h1>Registration Page</h1>
+<h1 class="title">Registration Page</h1>
 
 <?php
 if (isset($error)) {
@@ -7,17 +7,17 @@ if (isset($error)) {
 ?>
 
 <form action="/register" method="POST">
-	<div>
-		<label for="email">Email</label>
-		<input id="email" type="email" name="email" required>
+	<div class="field">
+		<label class="label" for="email">Email</label>
+		<input class="input" id="email" type="email" name="email" required>
 	</div>
-	<div>
-		<label for="password">Password</label>
-		<input id="password" type="password" name="password" required>
+	<div class="field">
+		<label class="label" for="password">Password</label>
+		<input class="input" id="password" type="password" name="password" required>
 	</div>
 
-	<div>
-		<button type="submit">Register</button>
+	<div class="control">
+		<button class="button is-link" type="submit">Register</button>
 	</div>
 </form>
 
