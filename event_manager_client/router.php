@@ -39,5 +39,5 @@ function route($uri, $method)
 		}
 	}
 
-	render("views/errors/404.php");
+	render("views/errors/404");
 }
