@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
 
-  web_client:
-    build: ./event_manager_client
-    ports:
-      - "8080:80"
+#   web_client:
+#     build: ./event_manager_client
+#     ports:
+#       - "8080:80"
 
   auth_service:
     build: ./event_manager_api/auth_service
