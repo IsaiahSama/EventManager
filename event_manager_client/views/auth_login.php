@@ -19,7 +19,7 @@ if (isset($error)) {
 	</div>
 
 	<div class="control">
-		<button class="button is-info">Submit</button>
+		<button class="button is-info">Login</button>
 	</div>
 
 </form>

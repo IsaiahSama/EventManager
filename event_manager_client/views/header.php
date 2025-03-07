@@ -9,4 +9,55 @@
 </head>
 
 <body>
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/event/all">Event Management System</a>
+		</div>
+
+		<div id="navbarBasicExample" class="navbar-menu is-active">
+			<div class="navbar-start">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">
+						Events
+					</a>
+
+					<div class="navbar-dropdown">
+						<a class="navbar-item" href="/event/create">
+							Create
+						</a>
+						<a class="navbar-item" href="/event/all">
+							View All
+						</a>
+					</div>
+				</div>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">
+						UserEvents
+					</a>
+
+					<div class="navbar-dropdown">
+						<a class="navbar-item" href="/user/event/reigster">
+							Register
+						</a>
+						<a class="navbar-item" href="/user/event">
+							View
+						</a>
+					</div>
+				</div>
+
+			</div>
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a class="button is-primary">
+							<strong>Sign up</strong>
+						</a>
+						<a class="button is-light">
+							Log in
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
 	<section class="section">
