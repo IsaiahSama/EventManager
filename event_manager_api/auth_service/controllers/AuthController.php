@@ -43,8 +43,7 @@ class AuthController
 
 		$userExists = User::findWhere("email", $email);
 		if ($userExists != null) {
-			$error = ["error" => "This email is already in use"];
-			return new OperationStatus(false, $error);
+			return new OperationStatus(false, "This email is already in use", 400);
 		}
 
 		// Hash password
