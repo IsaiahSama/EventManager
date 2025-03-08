@@ -88,7 +88,7 @@ class AuthController
 			return new OperationStatus(false, $error);
 		}
 
-		return new OperationStatus(true, ["success" => "User successfully logged in", "api-key" => $user->apiKey]);
+		return new OperationStatus(true, ["success" => "User successfully logged in", "api-key" => $user->apiKey, "email" => $user->email]);
 	}
 
 	public static function postLoginAPI(): void
