@@ -1,4 +1,5 @@
 <?php
+include_once "Curler.php";
 
 class FrontController
 {
@@ -49,8 +50,13 @@ class FrontController
 	 */
 	public static function viewEventsPage(array $data = []): void
 	{
-		$response = Curler::get("/events");
-		$results = array_merge($data, $response["data"]);
+		$results = $data;
+
+		if (empty($data)) {
+			$response = Curler::get("/events");
+			$results = $response["data"];
+		}
+
 		render("views/events_view", ["events" => $results]);
 	}
 
