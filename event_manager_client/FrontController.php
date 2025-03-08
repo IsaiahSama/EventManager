@@ -49,7 +49,9 @@ class FrontController
 	 */
 	public static function viewEventsPage(array $data = []): void
 	{
-		render("views/events_view", $data);
+		$response = Curler::get("/events");
+		$results = array_merge($data, $response["data"]);
+		render("views/events_view", ["events" => $results]);
 	}
 
 	/**
