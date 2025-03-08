@@ -10,6 +10,7 @@ $routes["GET"] = [
 	["#^$#", "FrontController::getHomePage"],
 	["#^/register$#", "FrontController::getRegisterPage"],
 	["#^/login$#", "FrontController::getLoginPage"],
+	["#^/logout$#", "FrontController::logout"],
 	["#^/event/create$#", "FrontController::getEventCreatePage"],
 	["#^/event/update#", "FrontController::getEventUpdatePage"],
 	["#^/event/([0-9]+)$#", "FrontController::viewEventPage"],

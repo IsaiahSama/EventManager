@@ -35,6 +35,18 @@ class FrontController
 		render("views/auth_login", $data);
 	}
 
+	public static function logout(): void
+	{
+		$message = "You have been logged out successfully";
+
+		if (!SessionManager::userLoggedIn()) {
+			$message = "You were not logged in, so you can't log out.";
+		}
+
+		SessionManager::clearSession();
+		static::getLoginPage(["message" => $message]);
+	}
+
 	/**
 	 * @param array<int,mixed> $data
 	 */
