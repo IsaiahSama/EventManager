@@ -13,7 +13,7 @@ if (isset($message)) {
 
 	<div class="field">
 		<label class="label" for="email">Email</label>
-		<input class="input" id="email" type="email" name="email" value=<?= $_POST["email"] ?? $email ?? "" ?> required>
+		<input class="input" id="email" type="email" name="email" required value=<?= $_POST["email"] ?? $email ?? "" ?>>
 	</div>
 
 	<div class="field">

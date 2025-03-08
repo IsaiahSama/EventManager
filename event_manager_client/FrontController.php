@@ -96,7 +96,7 @@ class FrontController
 			self::getRegisterPage(["error" => $response["error"]]);
 			die();
 		}
-		self::getLoginPage(["message" => "You're account has been created. Login here"]);
+		self::getLoginPage(["message" => "You're account has been created. Login here", "email" => $opResult->data["email"]]);
 	}
 
 	public static function postLogin(): void {}
