@@ -49,12 +49,19 @@
 			<div class="navbar-end">
 				<div class="navbar-item">
 					<div class="buttons">
-						<a class="button is-primary" href="/register">
-							<strong>Sign up</strong>
-						</a>
-						<a class="button is-light" href="/login">
-							Log in
-						</a>
+						<?php if (!SessionManager::userLoggedIn()): ?>
+							<a class="button is-primary" href="/register">
+								<strong>Sign up</strong>
+							</a>
+							<a class="button is-light" href="/login">
+								Log in
+							</a>
+						<?php else: ?>
+							<a class="button is-info" href="/logout">
+								Logout
+							</a>
+
+						<?php endif ?>
 					</div>
 				</div>
 			</div>
