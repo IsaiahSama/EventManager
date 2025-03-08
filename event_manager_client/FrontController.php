@@ -82,6 +82,19 @@ class FrontController
 			$response = Curler::get("/events");
 			$results = $response["data"];
 		}
+		echo json_encode($results);
+
+		$userData = SessionManager::getUser();
+		$email = $userData["email"];
+
+		for ($i = 0; $i < count($results); $i++) {
+
+			if ($results[$i]["hostEmail"] == $email) {
+				$results[$i]["isOwner"] = true;
+			} else {
+				$results[$i]["isOwner"] = false;
+			}
+		}
 
 		render("views/events_view", ["events" => $results]);
 	}
@@ -177,7 +190,6 @@ class FrontController
 			die();
 		}
 
-		echo json_encode($response);
 		self::getEventCreatePage(["message" => "Event created successfully. View on All Events page"]);
 	}
 
