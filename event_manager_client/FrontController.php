@@ -99,7 +99,30 @@ class FrontController
 		self::getLoginPage(["message" => "You're account has been created. Login here", "email" => $opResult->data["email"]]);
 	}
 
-	public static function postLogin(): void {}
+	public static function postLogin(): void
+	{
+		$opResult = FormHelper::validateUserInfo($_POST);
+		if ($opResult->success == false) {
+			self::getLoginPage($opResult->data);
+			die();
+		}
+
+		$response = Curler::post("/auth/login", $opResult->data);
+		if (gettype($response) == "string") {
+			self::getLoginPage(["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			self::getLoginPage(["error" => $response["error"]]);
+			die();
+		}
+		$data = $response["data"];
+		$email = $data["email"];
+		$apiKey = $data["api-key"];
+
+		self::viewHomePage(["message" => "Welcome back " . $email]);
+	}
 
 	public static function postEventCreate(): void {}
 

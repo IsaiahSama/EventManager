@@ -18,7 +18,7 @@ if (isset($message)) {
 
 	<div class="field">
 		<label class="label" for="password">Password</label>
-		<input class="input" type="password">
+		<input class="input" type="password" id="password" name="password">
 	</div>
 
 	<div class="control">
