@@ -32,7 +32,7 @@ class SessionManager
 		$user = [];
 
 		$user["email"] = $_SESSION[static::$sessionEmailKey] ?? "";
-		$user["apiKey"] = $_SESSION[static::$sessionApiKeyKey] ?? "";
+		$user["api-key"] = $_SESSION[static::$sessionApiKeyKey] ?? "";
 
 		return $user;
 	}
