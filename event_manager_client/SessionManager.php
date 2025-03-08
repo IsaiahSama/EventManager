@@ -37,6 +37,15 @@ class SessionManager
 		return $user;
 	}
 
+	public static function userLoggedIn(): bool
+	{
+		if (!isset($_SESSION[static::$sessionApiKeyKey])) {
+
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * @return void
 	 */

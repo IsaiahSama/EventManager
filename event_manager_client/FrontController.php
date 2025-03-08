@@ -11,6 +11,11 @@ class FrontController
 	public static function getHomePage(array $data = []): void
 	{
 
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
+
 		render("views/home", $data);
 	}
 
