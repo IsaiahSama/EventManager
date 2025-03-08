@@ -130,6 +130,8 @@ class FrontController
 		$email = $data["email"];
 		$apiKey = $data["api-key"];
 
+		SessionManager::setUser($email, $apiKey);
+
 		self::getHomePage(["message" => "Welcome back " . $email]);
 	}
 
