@@ -10,7 +10,7 @@ class EventValidator extends Validator
 	public static function validateEventCreation(array $data): OperationStatus
 	{
 
-		$requiredFields = ["eventName", "startDate", "endDate", "price", "api-key"];
+		$requiredFields = ["eventName", "location", "startDate", "endDate", "price", "api-key"];
 
 		$validFieldsResult = static::hasRequiredFields($requiredFields, $data);
 
@@ -54,6 +54,13 @@ class EventValidator extends Validator
 			if (strlen($data['eventName']) > 100) {
 				$success = false;
 				$errors["eventName"] = "`event name` is far too long.";
+			}
+		}
+
+		if (isset($data["location"])) {
+			if (strlen($data["location"]) > 255) {
+				$success = false;
+				$errors["location"] = "`location` should not exceed 255 characters";
 			}
 		}
 
@@ -118,7 +125,7 @@ class EventValidator extends Validator
 			return $modifyPerms;
 		}
 
-		$modifiableFields = ["eventName", "startDate", "endDate", "price"];
+		$modifiableFields = ["eventName", "startDate", "endDate", "price", "location"];
 
 		$event = [];
 
@@ -129,7 +136,7 @@ class EventValidator extends Validator
 		}
 
 		if (empty($event)) {
-			return new OperationStatus(false, "Modifiable fields are `eventName`, `startDate`, `endDate`, and `price`. None of these were provided", 400);
+			return new OperationStatus(false, "Modifiable fields are: " . implode(", ", $modifiableFields) . " . None of these were provided", 400);
 		}
 
 		$valid = static::validateEventFields($event);

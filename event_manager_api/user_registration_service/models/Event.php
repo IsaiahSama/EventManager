@@ -12,6 +12,7 @@ class Event extends Model
 
 	public int $eventID;
 	public string $eventName;
+	public string $location;
 	public string $startDate;
 	public string $endDate;
 	public float $price;
@@ -21,6 +22,7 @@ class Event extends Model
 	{
 		$this->eventID = $fields["eventID"];
 		$this->eventName = $fields["eventName"];
+		$this->location = $fields["location"];
 		$this->startDate = $fields["startDate"];
 		$this->endDate = $fields["endDate"];
 		$this->price = $fields["price"];
