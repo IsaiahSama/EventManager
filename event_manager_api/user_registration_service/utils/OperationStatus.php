@@ -11,6 +11,10 @@ class OperationStatus
 	 */
 	public function __construct(bool $success, array|string $data, int $statusCode = 200)
 	{
+		// So I don't have to go around updating all the usages everywhere.
+		if ($success == false && $statusCode == 200) {
+			$statusCode = 400;
+		}
 		$this->success = $success;
 		$this->data = $data;
 		$this->statusCode = $statusCode;
