@@ -46,13 +46,17 @@ class Model
 
 		$lastId = $conn->insert_id;
 
+		global $redis;
+		if ($redis->get(static::$cacheName) == false) {
+			$redis->unlink(static::$cacheName);
+		}
+
 		return static::find($lastId);
 	}
 
 	public static function findAll(): array
 	{
-		$redis = new Redis();
-		$redis->connect('redis', 6379);
+		global $redis;
 
 		$cachedField = $redis->get(static::$cacheName);
 		if ($cachedField) {

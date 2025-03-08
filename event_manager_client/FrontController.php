@@ -82,7 +82,6 @@ class FrontController
 			$response = Curler::get("/events");
 			$results = $response["data"];
 		}
-		echo json_encode($results);
 
 		$userData = SessionManager::getUser();
 		$email = $userData["email"];

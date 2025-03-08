@@ -11,6 +11,9 @@ include_once "utils/APIResponse.php";
 include_once "utils/validators/Validator.php";
 include_once "utils/validators/UserValidator.php";
 
+$redis = new Redis();
+$redis->connect('redis', 6379);
+
 # $uri = explode("/", $_SERVER["REQUEST_URI"]);
 
 $uri = $_SERVER["REQUEST_URI"];

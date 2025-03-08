@@ -10,6 +10,9 @@ include_once "utils/OperationStatus.php";
 include_once "utils/APIResponse.php";
 include_once "utils/validators/Validator.php";
 
+$redis = new Redis();
+$redis->connect('redis', 6379);
+
 # $uri = explode("/", $_SERVER["REQUEST_URI"]);
 
 $uri = $_SERVER["REQUEST_URI"];

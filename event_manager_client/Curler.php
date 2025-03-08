@@ -43,7 +43,7 @@ class Curler
 		]);
 
 		$result = curl_exec($ch);
-
+		echo json_encode($result);
 		curl_close($ch);
 		return json_decode($result, true) ?? "Service is currently unavailable";
 	}
