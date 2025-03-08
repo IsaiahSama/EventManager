@@ -78,7 +78,26 @@ class FrontController
 
 	// Post Methods
 
-	public static function postRegister(): void {}
+	public static function postRegister(): void
+	{
+		$opResult = FormHelper::validateUserInfo($_POST);
+		if ($opResult->success == false) {
+			self::getRegisterPage($opResult->data);
+			die();
+		}
+
+		$response = Curler::post("/auth/register", $opResult->data);
+		if (gettype($response) == "string") {
+			self::getRegisterPage(["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			self::getRegisterPage(["error" => $response["error"]]);
+			die();
+		}
+		self::getLoginPage(["message" => "You're account has been created. Login here"]);
+	}
 
 	public static function postLogin(): void {}
 

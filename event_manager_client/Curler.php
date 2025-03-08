@@ -7,7 +7,7 @@ class Curler
 	/**
 	 * @param array<int,mixed> $response
 	 */
-	public static function get(string $url): array
+	public static function get(string $url): array|string
 	{
 
 		$targetURL = static::$baseURL . ltrim($url, "/");
@@ -23,13 +23,13 @@ class Curler
 
 		$result = curl_exec($ch);
 		curl_close($ch);
-		return json_decode($result, true);
+		return json_decode($result, true) ?? "Service is currently unavailable";
 	}
 
 	/**
 	 * @param array<int,mixed> $data
 	 */
-	public static function post(string $url, array $data): array
+	public static function post(string $url, array $data): array|string
 	{
 
 		$targetURL = static::$baseURL . ltrim($url, "/");
@@ -39,13 +39,12 @@ class Curler
 			CURLOPT_URL => $targetURL,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_POST => true,
-			CURLOPT_HTTPHEADER => ['content-type: application/json'],
-			CURLOPT_POSTFIELDS => $data
+			CURLOPT_POSTFIELDS => http_build_query($data)
 		]);
 
 		$result = curl_exec($ch);
 
 		curl_close($ch);
-		return json_decode($result, true);
+		return json_decode($result, true) ?? "Service is currently unavailable";
 	}
 }
