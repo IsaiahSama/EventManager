@@ -32,6 +32,9 @@ class Model
 		return static::find($lastId);
 	}
 
+	/**
+	 * @return mixed|<missing>
+	 */
 	public static function findAll(): array
 	{
 		$redis = new Redis();
