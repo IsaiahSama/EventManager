@@ -15,7 +15,7 @@
 	</thead>
 	<tbody>
 		<?php
-		if (!isset($events)) {
+		if (!isset($events) || (isset($events) && empty($events))) {
 			echo "No Events";
 		} else {
 			foreach ($events as $event) {
