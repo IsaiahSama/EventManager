@@ -21,10 +21,14 @@ class AuthController
 		echo json_encode(new APIResponse($user, 200));
 	}
 
-	public static function handleRegistration(string $email, string $password): OperationStatus
+	public static function handleRegistration(array $data): OperationStatus
 	{
+
+		$email = $data["email"] ?? "";
+		$password = $data["password"] ?? "";
+
 		if (empty($email) || empty($password)) {
-			return OperationStatus::MissingFields(["email", "received"], []);
+			return OperationStatus::MissingFields(["email", "password"], array_keys($data));
 		}
 
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -58,13 +62,10 @@ class AuthController
 
 	public static function postRegisterAPI(): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true);
-		$email = $data["email"] ?? "";
-		$password = $data["password"] ?? "";
+		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
+		$status = static::handleRegistration($data);
 
-		$status = static::handleRegistration($email, $password);
-
-		echo json_encode($status->data);
+		echo json_encode(new APIResponse($status->data, $status->statusCode));
 	}
 
 	public static function handleLogin(string $email, string $password): OperationStatus
@@ -93,12 +94,12 @@ class AuthController
 
 	public static function postLoginAPI(): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true);
+		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
 		$email = $data["email"] ?? "";
 		$password = $data["password"] ?? "";
 
 		$result = static::handleLogin($email, $password);
 
-		echo json_encode($result->data);
+		echo json_encode(new APIResponse($result->data, $result->statusCode));
 	}
 }
