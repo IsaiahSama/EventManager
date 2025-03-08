@@ -24,7 +24,7 @@ class APIResponse implements JsonSerializable
 		http_response_code($this->statusCode);
 
 		if ($this->statusCode >= 400) {
-			$result["error"] = $this->data;
+			$result["error"] = $this->data["error"] ?? $this->data;
 		} else {
 			$result['data'] = $this->data;
 		}
