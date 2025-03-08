@@ -27,6 +27,14 @@ class AuthController
 			return OperationStatus::MissingFields(["email", "received"], []);
 		}
 
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			return new OperationStatus(false, "Email is of invalid format", 400);
+		}
+
+		if (strlen($password) < 5 || strlen($password) > 30) {
+			return new OperationStatus(false, "Password must be between 5 and 30 characters", 400);
+		}
+
 		// Validate email is unique 
 
 		$userExists = User::findWhere("email", $email);
