@@ -7,6 +7,7 @@ include_once "FrontController.php";
 $routes = array();
 
 $routes["GET"] = [
+	["#^$#", "FrontController::getHomePage"],
 	["#^/register$#", "FrontController::getRegisterPage"],
 	["#^/login$#", "FrontController::getLoginPage"],
 	["#^/event/create$#", "FrontController::getEventCreatePage"],

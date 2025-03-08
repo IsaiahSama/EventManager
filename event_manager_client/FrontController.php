@@ -8,6 +8,15 @@ class FrontController
 	/**
 	 * @param array<int,mixed> $data
 	 */
+	public static function getHomePage(array $data = []): void
+	{
+
+		render("views/home", $data);
+	}
+
+	/**
+	 * @param array<int,mixed> $data
+	 */
 	public static function getRegisterPage(array $data = []): void
 	{
 		render("views/auth_register", $data);
@@ -121,7 +130,7 @@ class FrontController
 		$email = $data["email"];
 		$apiKey = $data["api-key"];
 
-		self::viewHomePage(["message" => "Welcome back " . $email]);
+		self::getHomePage(["message" => "Welcome back " . $email]);
 	}
 
 	public static function postEventCreate(): void {}

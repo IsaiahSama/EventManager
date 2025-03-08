@@ -2,6 +2,6 @@
 
 	<div class="container">
 		<h1 class="has-text-danger title"> 404! This page was does not exist! </h1>
-		<p class="content">Return to home page <a href="/event/all">here</a></p>
+		<p class="content">Return to home page <a href="/">here</a></p>
 	</div>
 </div>

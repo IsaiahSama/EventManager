@@ -11,7 +11,7 @@
 <body>
 	<nav class="navbar" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
-			<a class="navbar-item" href="/event/all">Event Management System</a>
+			<a class="navbar-item" href="/">Event Management System</a>
 		</div>
 
 		<div id="navbarBasicExample" class="navbar-menu is-active">
@@ -36,10 +36,10 @@
 					</a>
 
 					<div class="navbar-dropdown">
-						<a class="navbar-item" href="/user/event/reigster">
+						<a class="navbar-item" href="/user/event/register">
 							Register
 						</a>
-						<a class="navbar-item" href="/user/event">
+						<a class="navbar-item" href="/user/events">
 							View
 						</a>
 					</div>
