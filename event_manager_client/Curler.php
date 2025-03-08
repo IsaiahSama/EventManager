@@ -2,22 +2,27 @@
 
 class Curler
 {
+	public static string $baseURL = "http://127.0.0.1:8081/";
+
 	/**
 	 * @param array<int,mixed> $response
 	 */
-	public static function get(string $url, array $response): array
+	public static function get(string $url): array
 	{
+
+		$targetURL = static::$baseURL . ltrim($url, "/");
+
 		$ch = curl_init();
 		curl_setopt_array($ch, [
-			CURLOPT_URL => $url,
+			CURLOPT_URL => $targetURL,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_POST => true,
 			CURLOPT_HTTPHEADER => ['content-type: application/json'],
-			CURLOPT_POSTFIELDS => json_encode($response),
+			CURLOPT_CUSTOMREQUEST => "GET"
 		]);
 
 		$result = curl_exec($ch);
-		return json_decode($result);
+		return json_decode($result, true);
 	}
 
 	/**
