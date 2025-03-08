@@ -53,7 +53,9 @@ class Model
 
 		return static::find($lastId);
 	}
-
+	/**
+	 * @return mixed|<missing>
+	 */
 	public static function findAll(): array
 	{
 		global $redis;
