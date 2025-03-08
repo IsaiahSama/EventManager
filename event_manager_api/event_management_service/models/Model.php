@@ -19,13 +19,30 @@ class Model
 	{
 		global $conn;
 
-		$keys = implode(",", array_keys($fields));
-		$values = implode("','", array_values($fields));
+		// Cleaning input
+
+		$keys = [];
+		$values = [];
+
+		foreach (array_keys($fields) as $field) {
+			$keys[] = str_replace(['"', "'"], '', $field);
+		}
+
+		foreach (array_values($fields) as $field) {
+			$values[] = str_replace(['"', "'"], '', $field);
+		}
+
+		$keys = implode(",", $keys);
+		$values = implode("','", $values);
 		$tablename = static::$table;
 
 		$sql = "INSERT INTO $tablename ($keys) VALUES ('$values')";
 
-		$conn->query($sql);
+		$success = $conn->query($sql);
+		if (!$success) {
+			echo $conn->error;
+			return null;
+		}
 
 		$lastId = $conn->insert_id;
 

@@ -23,7 +23,7 @@ class OperationStatus
 	public static function MissingFields(array $expected, array $received): OperationStatus
 	{
 
-		$data = "Missing Fields. Expected " . implode(", ", $expected) . " but received " . implode(", ", $received) . ".";
+		$data = "Missing Fields. Expected " . implode(", ", $expected) . " but received " . implode(", ", $received) . ". Missing: " . implode(", ", array_diff($expected, $received));
 
 		return new OperationStatus(false, $data, 400);
 	}

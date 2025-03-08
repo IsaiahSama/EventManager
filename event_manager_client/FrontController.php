@@ -152,7 +152,34 @@ class FrontController
 		self::getHomePage(["message" => "Welcome back " . $email]);
 	}
 
-	public static function postEventCreate(): void {}
+	public static function postEventCreate(): void
+	{
+
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
+
+		$user = SessionManager::getUser();
+		$apiKey = $user["api-key"];
+
+		$body = ["api-key" => $apiKey];
+		$data = array_merge($body, $_POST);
+
+		$response = Curler::post("/events", $data);
+
+		if ($response["status"] != 200) {
+			if (gettype($response["error"]) == "string") {
+				self::getEventCreatePage(["error" => $response["error"]]);
+			} else {
+				self::getEventCreatePage($response["error"]);
+			}
+			die();
+		}
+
+		echo json_encode($response);
+		self::getEventCreatePage(["message" => "Event created successfully. View on All Events page"]);
+	}
 
 	public static function postEventUpdate(): void {}
 

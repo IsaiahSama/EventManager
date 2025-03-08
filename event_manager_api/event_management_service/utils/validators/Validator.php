@@ -11,7 +11,10 @@ class Validator
 		$result = [];
 
 		foreach ($fields as $field) {
-			$data[$field] = preg_replace('/\s+/', '', $data[$field] ?? "");
+			if (isset($data[$field])) {
+				$data[$field] = preg_replace('/\s+/', '', $data[$field] ?? "");
+			}
+
 			if (!isset($data[$field]) || (isset($data[$field]) && empty($data[$field]))) {
 				return OperationStatus::MissingFields($fields, array_keys($data));
 			}
