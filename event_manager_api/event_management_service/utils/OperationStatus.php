@@ -11,6 +11,10 @@ class OperationStatus
 	 */
 	public function __construct(bool $success, array|string $data, int $statusCode = 200)
 	{
+		// So I don't have to go around updating all the usages everywhere.
+		if ($success == false && $statusCode == 200) {
+			$statusCode = 400;
+		}
 		$this->success = $success;
 		$this->data = $data;
 		$this->statusCode = $statusCode;
@@ -23,7 +27,7 @@ class OperationStatus
 	public static function MissingFields(array $expected, array $received): OperationStatus
 	{
 
-		$data = "Missing Fields. Expected " . implode(", ", $expected) . " but received " . implode(", ", $received) . ". Missing: " . implode(", ", array_diff($expected, $received));
+		$data = "Missing Fields. Expected " . implode(", ", $expected) . " but received " . implode(", ", $received) . ".";
 
 		return new OperationStatus(false, $data, 400);
 	}
