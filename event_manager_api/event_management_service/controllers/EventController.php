@@ -30,7 +30,10 @@ class EventController
 
 	public static function createEvent(): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
+		$vars = [];
+		parse_str(file_get_contents("php://input"), $putVars);
+
+		$data = $vars ?? $_POST;
 		$result = EventValidator::validateEventCreation($data);
 
 		if ($result->success == false) {
@@ -47,7 +50,11 @@ class EventController
 
 	public static function updateEvent(string $eventID): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
+		$putVars = [];
+		parse_str(file_get_contents("php://input"), $putVars);
+
+		$data = $putVars ?? $_POST;
+
 		$data["eventID"] = $eventID;
 
 		$result = EventValidator::validateEventUpdate($data);

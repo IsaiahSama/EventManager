@@ -62,12 +62,32 @@ class FrontController
 	/**
 	 * @param array<int,mixed> $data
 	 */
-	public static function getEventUpdatePage(array $data = []): void
+	public static function getEventUpdatePage(string $eventID, array $data = []): void
 	{
 		if (!SessionManager::userLoggedIn()) {
 			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
 			die();
 		}
+
+		if (isset($data["error"])) {
+			render("views/event_update", $data);
+			die();
+		}
+
+		$response = Curler::get("/events/$eventID");
+
+		if (gettype($response) == "string") {
+			self::getEventUpdatePage($eventID, ["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			self::getEventUpdatePage($eventID, ["error" => $response["error"]]);
+			die();
+		}
+
+		$event = $response["data"];
+		$data["event"] = $event;
 		render("views/event_update", $data);
 	}
 
@@ -230,7 +250,7 @@ class FrontController
 			if (gettype($response["error"]) == "string") {
 				self::getEventCreatePage(["error" => $response["error"]]);
 			} else {
-				self::getEventCreatePage($response["error"]);
+				self::getEventCreatePage($response);
 			}
 			die();
 		}
@@ -238,13 +258,38 @@ class FrontController
 		self::getEventCreatePage(["message" => "Event created successfully. View on All Events page"]);
 	}
 
-	public static function postEventUpdate(): void
+	public static function postEventUpdate(string $eventID): void
 	{
 
 		if (!SessionManager::userLoggedIn()) {
 			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
 			die();
 		}
+
+		$user = SessionManager::getUser();
+		$apiKey = $user["api-key"];
+
+		$body = ["api-key" => $apiKey];
+		$_POST = array_merge($_POST, ["eventID" => $eventID]);
+		$data = array_merge($body, $_POST);
+
+		$response = Curler::put("/events/$eventID", $data);
+
+		if (gettype($response) == "string") {
+			self::getLoginPage(["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			if (gettype($response["error"]) == "string") {
+				self::getEventUpdatePage($eventID, ["error" => $response["error"], "event" => $data]);
+			} else {
+				self::getEventUpdatePage($eventID, array_merge($response, $data));
+			}
+			die();
+		}
+
+		self::getEventUpdatePage($eventID, ["message" => "Event updated successfully. View on All Events page"]);
 	}
 
 	public static function postUserEventRegister(): void

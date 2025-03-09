@@ -2,7 +2,7 @@
 
 <?php
 if (isset($error)) {
-	echo "<span style='color:red;'>$error</span>";
+	echo "<span class='has-text-danger'>$error</span>";
 }
 
 if (isset($message)) {

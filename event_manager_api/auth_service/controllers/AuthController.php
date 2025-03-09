@@ -61,8 +61,10 @@ class AuthController
 
 	public static function postRegisterAPI(): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
-		$status = static::handleRegistration($data);
+		$vars = [];
+		parse_str(file_get_contents("php://input"), $putVars);
+
+		$data = $vars ?? $_POST;		$status = static::handleRegistration($data);
 
 		echo json_encode(new APIResponse($status->data, $status->statusCode));
 	}
@@ -93,8 +95,10 @@ class AuthController
 
 	public static function postLoginAPI(): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
-		$email = $data["email"] ?? "";
+		$vars = [];
+		parse_str(file_get_contents("php://input"), $putVars);
+
+		$data = $vars ?? $_POST;		$email = $data["email"] ?? "";
 		$password = $data["password"] ?? "";
 
 		$result = static::handleLogin($email, $password);
