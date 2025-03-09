@@ -68,3 +68,12 @@
 		</div>
 	</nav>
 	<section class="section">
+		<?php
+		if (isset($error)) {
+			echo "<span class='has-text-danger'>$error</span>";
+		}
+
+		if (isset($message)) {
+			echo "<span class='has-text-info'>$message</span>";
+		}
+		?>

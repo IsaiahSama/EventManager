@@ -1,15 +1,5 @@
 <h1 class="title">View Events</h1>
 
-<?php
-if (isset($error)) {
-	echo "<span class='has-text-danger'>$error</span>";
-}
-
-if (isset($message)) {
-	echo "<span class='has-text-info'>$message</span>";
-}
-?>
-
 <table class="table">
 	<thead>
 		<tr>

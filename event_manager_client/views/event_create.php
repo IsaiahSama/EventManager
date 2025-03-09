@@ -1,15 +1,5 @@
 <h1 class="title">Create An Event</h1>
 
-<?php
-if (isset($error)) {
-	echo "<span class='has-text-danger'>$error</span>";
-}
-
-if (isset($message)) {
-	echo "<span class='has-text-info'>$message</span>";
-}
-?>
-
 <form action="/event/create" method="POST">
 
 	<div class="field">

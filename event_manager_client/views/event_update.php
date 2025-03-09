@@ -1,15 +1,6 @@
 <h1 class="title">Update Event</h1>
 <h2 class="subtitle">Updating the event <?= $event['eventName'] ?? '' ?> </h2>
 
-<?php
-if (isset($error)) {
-	echo "<span class='has-text-danger'>$error</span>";
-}
-if (isset($message)) {
-	echo "<span class='has-text-success'>$message</span>";
-}
-?>
-
 <form action="/event/<?= $event['eventID'] ?>/update" method="POST">
 
 	<div class="field">

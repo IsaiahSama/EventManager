@@ -1,14 +1,5 @@
 <h1 class="title">Login Page</h1>
 
-<?php
-if (isset($error)) {
-	echo "<span class='has-text-danger'>$error</span>";
-}
-if (isset($message)) {
-	echo "<span class='has-text-success'>$message</span>";
-}
-?>
-
 <form action="/login" method="POST">
 
 	<div class="field">
