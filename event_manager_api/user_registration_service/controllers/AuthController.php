@@ -18,7 +18,7 @@ class AuthController
 		$events = UserEvent::findWhere("userID", $userID, 0);
 
 		if (empty($events)) {
-			echo json_encode(new APIResponse([], 404, "This user has no events"));
+			echo json_encode(new APIResponse("This user has no events", 404));
 			die();
 		}
 

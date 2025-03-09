@@ -135,13 +135,56 @@ class FrontController
 	/**
 	 * @param array<int,mixed> $data
 	 */
-	public static function getUserEventsPage(array $data = []): void
+	public static function getUserEventsPage(string $userID = "", array $data = []): void
 	{
 		if (!SessionManager::userLoggedIn()) {
 			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
 			die();
 		}
-		render("views/user_events_get", $data);
+
+
+		$apiKey = SessionManager::getUser()["api-key"];
+		$targetID = $userID;
+		if (empty($userID)) {
+			$response = Curler::get("/auth/user", ["api-key" => $apiKey]);
+
+			if (gettype($response) == "string") {
+				self::getUserEventsPage("---", ["error" => $response]);
+				die();
+			}
+
+			if ($response["status"] != 200) {
+				self::getUserEventsPage("---", ["error" => $response["error"]]);
+				die();
+			}
+
+			$user = $response["data"];
+			$targetID = $user["userID"];
+		}
+
+		$data["userID"] = $targetID;
+
+		if (isset($data["error"])) {
+			render("views/user_events_get", $data);
+			die();
+		}
+
+		$response = Curler::get("/users/$targetID/events", ["api-key" => $apiKey]);
+
+		if (gettype($response) == "string") {
+			self::getUserEventsPage($userID, ["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			self::getUserEventsPage($userID, ["error" => $response["error"]]);
+			die();
+		}
+
+		$events = $response["data"];
+		$events["userID"] = $targetID;
+
+		render("views/user_events_get", $events);
 	}
 
 	/**
