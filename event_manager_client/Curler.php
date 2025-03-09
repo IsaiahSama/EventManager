@@ -23,6 +23,7 @@ class Curler
 
 		$result = curl_exec($ch);
 		curl_close($ch);
+		echo $result;
 		return json_decode($result, true) ?? "Service is currently unavailable";
 	}
 
@@ -44,6 +45,7 @@ class Curler
 
 		$result = curl_exec($ch);
 		curl_close($ch);
+		echo $result;
 		return json_decode($result, true) ?? "Service is currently unavailable";
 	}
 
@@ -88,6 +90,7 @@ class Curler
 
 		$result = curl_exec($ch);
 		curl_close($ch);
+		echo $result;
 		return json_decode($result, true) ?? "Service is currently unavailable";
 	}
 }
