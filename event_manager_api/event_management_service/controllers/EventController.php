@@ -66,8 +66,17 @@ class EventController
 	public static function deleteEvent(string $eventID): void
 	{
 
-		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
+		$data = [];
 		$data["eventID"] = $eventID;
+
+		$opResult = UserValidator::validateAPIKeyFromParam();
+
+		if ($opResult->success == false) {
+			echo json_encode(new APIResponse($opResult->data, $opResult->statusCode));
+			die();
+		}
+
+		$data["api-key"] = $opResult->data["apiKey"];
 
 		$result = EventValidator::validateEventDelete($data);
 

@@ -78,24 +78,22 @@ class FrontController
 	{
 		$results = $data;
 
-		if (empty($data)) {
-			$response = Curler::get("/events");
-			$results = $response["data"];
-		}
+		$response = Curler::get("/events");
+		$results["events"] = $response["data"];
 
 		$userData = SessionManager::getUser();
 		$email = $userData["email"];
 
-		for ($i = 0; $i < count($results); $i++) {
+		for ($i = 0; $i < count($results["events"]); $i++) {
 
-			if ($results[$i]["hostEmail"] == $email) {
-				$results[$i]["isOwner"] = true;
+			if ($results["events"][$i]["hostEmail"] == $email) {
+				$results["events"][$i]["isOwner"] = true;
 			} else {
-				$results[$i]["isOwner"] = false;
+				$results["events"][$i]["isOwner"] = false;
 			}
 		}
 
-		render("views/events_view", ["events" => $results]);
+		render("views/events_view", $results);
 	}
 
 	/**
@@ -112,6 +110,30 @@ class FrontController
 	public static function getUserEventRegisterPage(array $data = []): void
 	{
 		render("views/user_events_register", $data);
+	}
+
+	public static function deleteEvent(string $eventID): void
+	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
+
+		$apiKey = SessionManager::getUser()["api-key"];
+
+		$response = Curler::delete("/events/$eventID?api-key=$apiKey");
+
+		if (gettype($response) == "string") {
+			self::viewEventsPage(["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			self::viewEventsPage(["error" => $response["error"]]);
+			die();
+		}
+
+		self::viewEventsPage(["message" => "Deleted successfully"]);
 	}
 
 	// Post Methods

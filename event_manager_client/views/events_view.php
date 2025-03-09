@@ -1,5 +1,15 @@
 <h1 class="title">View Events</h1>
 
+<?php
+if (isset($error)) {
+	echo "<span class='has-text-danger'>$error</span>";
+}
+
+if (isset($message)) {
+	echo "<span class='has-text-info'>$message</span>";
+}
+?>
+
 <table class="table">
 	<thead>
 		<tr>
@@ -26,8 +36,8 @@
 				echo "<td>" . $event["price"] . "</td>";
 				echo "<td>" . $event["startDate"] . "</td>";
 				echo "<td>" . $event["endDate"] . "</td>";
-				echo "<td><a href='/event/eventID/edit'><button class='button is-link' " . ($event["isOwner"] == false ? "disabled" : "") . ">Edit</button></a></td>";
-				echo "<td><a href='/event/eventID/delete'><button class='button is-link' " . ($event["isOwner"] == false ? "disabled" : "") . ">Delete</button></a></td>";
+				echo "<td><a href='/event/" . $event["eventID"] . "/edit'><button class='button is-link' " . ($event["isOwner"] == false ? "disabled" : "") . ">Edit</button></a></td>";
+				echo "<td><a href='/event/" . $event["eventID"] . "/delete'><button class='button is-link' " . ($event["isOwner"] == false ? "disabled" : "") . ">Delete</button></a></td>";
 				echo "</tr>";
 			}
 		}

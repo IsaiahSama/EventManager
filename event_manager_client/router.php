@@ -15,6 +15,7 @@ $routes["GET"] = [
 	["#^/event/update#", "FrontController::getEventUpdatePage"],
 	["#^/event/([0-9]+)$#", "FrontController::viewEventPage"],
 	["#^/event/all$#", "FrontController::viewEventsPage"],
+	["#^/event/([0-9]+)/delete$#", "FrontController::deleteEvent"],
 	["#^/user/events$#", "FrontController::getUserEventsPage"],
 	["#^/user/event/register$#", "FrontController::getUserEventRegisterPage"],
 ];

@@ -20,7 +20,7 @@ $routes["PUT"] = [
 ];
 
 $routes["DELETE"] = [
-	['#^/events/([0-9]+)$#', "EventController::deleteEvent"],
+	['#^/events/([0-9]+)#', "EventController::deleteEvent"],
 ];
 
 function route($uri, $method)

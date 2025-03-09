@@ -132,6 +132,11 @@ class Model
 
 		$conn->query($sql);
 
+		global $redis;
+		if ($redis->get(static::$cacheName) == false) {
+			$redis->unlink(static::$cacheName);
+		}
+
 		return static::findWhere($key, $value);
 	}
 
@@ -144,5 +149,10 @@ class Model
 		$sql = "DELETE FROM $tablename WHERE $field = '$value'";
 
 		$conn->query($sql);
+
+		global $redis;
+		if ($redis->get(static::$cacheName) == false) {
+			$redis->unlink(static::$cacheName);
+		}
 	}
 }
