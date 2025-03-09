@@ -26,7 +26,7 @@ $routes["POST"] = [
 	["#^/login$#", "FrontController::postLogin"],
 	["#^/event/create$#", "FrontController::postEventCreate"],
 	["#^/event/([0-9]+)/update#", "FrontController::postEventUpdate"],
-	["#^/user/event/([0-9]+)/register#", "FrontController::postUserEventRegister"],
+	["#^/user/event/register$#", "FrontController::postUserEventRegister"],
 ];
 
 function route($uri, $method)

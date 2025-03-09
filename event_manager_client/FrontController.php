@@ -222,7 +222,7 @@ class FrontController
 
 		$results["events"] = $response["data"];
 
-		render("views/user_events_register", $results);
+		render("views/user_events_register", array_merge($results, $data));
 	}
 
 	public static function deleteEvent(string $eventID): void
@@ -368,5 +368,27 @@ class FrontController
 			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
 			die();
 		}
+
+		$eventID = $_POST["event"];
+
+		$user = SessionManager::getUser();
+		$apiKey = $user["api-key"];
+
+		$response = Curler::post("/users/events/$eventID/register", ["api-key" => $apiKey]);
+
+		if (gettype($response) == "string") {
+			self::getLoginPage(["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			if (gettype($response["error"]) == "string") {
+				self::getUserEventRegisterPage(["error" => $response["error"]]);
+			} else {
+				self::getUserEventRegisterPage($response);
+			}
+			die();
+		}
+		self::getUserEventRegisterPage(["message" => "Event Registered for successfully. View on your Events page"]);
 	}
 }

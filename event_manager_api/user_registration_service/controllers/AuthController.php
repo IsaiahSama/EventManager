@@ -22,7 +22,7 @@ class AuthController
 			die();
 		}
 
-		$callable = fn(array $event): string => Event::find($event["eventID"])["eventName"];
+		$callable = fn(array $event): array => Event::find($event["eventID"]);
 
 		$eventNames = array_map($callable, $events);
 

@@ -1,6 +1,6 @@
 <h1 class="title">Event Registration</h1>
 
-<form action="/user/event/register">
+<form action="/user/event/register" method="POST">
 
 	<div class="field">
 		<label class="label" for="event">Select Event</label>

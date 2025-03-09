@@ -10,8 +10,6 @@
 			<th>Event Price</th>
 			<th>Event Start Date</th>
 			<th>Event End Date</th>
-			<th>Edit</th>
-			<th>Delete</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -27,8 +25,6 @@
 				echo "<td>" . $event["price"] . "</td>";
 				echo "<td>" . $event["startDate"] . "</td>";
 				echo "<td>" . $event["endDate"] . "</td>";
-				echo "<td><a href='/event/eventID/edit'><button class='button is-link' " . $event["isOwner"] . ">Edit</button></a></td>";
-				echo "<td><a href='/event/eventID/delete'><button class='button is-link' " . $event["isOwner"] . ">Delete</button></a></td>";
 				echo "</tr>";
 			}
 		}

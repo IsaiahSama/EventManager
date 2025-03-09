@@ -9,7 +9,7 @@ class EventController
 
 	public static function registerUser(string $eventID): void
 	{
-		$data = json_decode(file_get_contents("php://input"), true);
+		$data = json_decode(file_get_contents("php://input"), true) ?? $_POST;
 		$data["eventID"] = $eventID;
 
 		$result = EventValidator::validateEventRegistration($data);
