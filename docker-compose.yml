@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+
+#   web_client:
+#     build: ./event_manager_client
+#     ports:
+#       - "8080:80"
+
+  auth_service:
+    build: ./event_manager_api/auth_service
+    depends_on:
+      - db
+    deploy:
+      replicas: 2
+
+  event_service:
+    build: ./event_manager_api/event_management_service
+    depends_on:
+      - db
+    deploy:
+      replicas: 2
+
+  user_service:
+    build: ./event_manager_api/user_registration_service
+    depends_on:
+      - db
+    deploy:
+      replicas: 2
+
+  load_balancer:
+    build: ./event_manager_api/load_balancer
+    ports:
+      - "8081:80"
+    depends_on:
+      - event_service
+      - auth_service
+      - user_service
+
+  redis:
+    image: redis:latest
+    volumes:
+      - ./event_manager_api/caching_service/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+
+  db:
+    image: mysql:latest
+    container_name: db
+    ports:
+      - "6033:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: scalable_assignment
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    restart: always
+    ports:
+      - "8084:80"
+
+volumes:
+  dbdata:
