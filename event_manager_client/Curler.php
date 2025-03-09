@@ -7,10 +7,16 @@ class Curler
 	/**
 	 * @param array<int,mixed> $response
 	 */
-	public static function get(string $url): array|string
+	public static function get(string $url, array $data = []): array|string
 	{
 
 		$targetURL = static::$baseURL . ltrim($url, "/");
+
+		if (!empty($data)) {
+
+			$query = http_build_query($data);
+			$targetURL = $targetURL . "?" . $query;
+		}
 
 		$ch = curl_init();
 		curl_setopt_array($ch, [
