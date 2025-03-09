@@ -115,6 +115,17 @@ class FrontController
 		$results = $data;
 
 		$response = Curler::get("/events");
+
+		if (gettype($response) == "string") {
+			render("views/events_view", ["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			render("views/events_view", $response);
+			die();
+		}
+
 		$results["events"] = $response["data"];
 
 		$userData = SessionManager::getUser();
@@ -196,7 +207,22 @@ class FrontController
 			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
 			die();
 		}
-		render("views/user_events_register", $data);
+
+		$response = Curler::get("/events");
+
+		if (gettype($response) == "string") {
+			render("views/events_view", ["error" => $response]);
+			die();
+		}
+
+		if ($response["status"] != 200) {
+			render("views/events_view", $response);
+			die();
+		}
+
+		$results["events"] = $response["data"];
+
+		render("views/user_events_register", $results);
 	}
 
 	public static function deleteEvent(string $eventID): void

@@ -17,5 +17,6 @@
 		</select>
 	</div>
 
+	<div class="control"><button class="button is-primary">Register</button></div>
 
 </form>
