@@ -20,7 +20,8 @@ class EventController
 		$event = Event::find($id);
 
 		if ($event == null) {
-			echo json_encode(new APIResponse(null, 404));
+			$opStatus = OperationStatus::UnknownEvent();
+			echo json_encode(new APIResponse($opStatus->data, $opStatus->statusCode));
 			die();
 		}
 
