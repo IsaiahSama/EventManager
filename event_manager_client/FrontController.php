@@ -52,6 +52,10 @@ class FrontController
 	 */
 	public static function getEventCreatePage(array $data = []): void
 	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
 		render("views/event_create", $data);
 	}
 
@@ -60,6 +64,10 @@ class FrontController
 	 */
 	public static function getEventUpdatePage(array $data = []): void
 	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
 		render("views/event_update", $data);
 	}
 
@@ -68,6 +76,10 @@ class FrontController
 	 */
 	public static function viewEventPage(array $data = []): void
 	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
 		render("views/event_view", $data);
 	}
 
@@ -76,6 +88,10 @@ class FrontController
 	 */
 	public static function viewEventsPage(array $data = []): void
 	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
 		$results = $data;
 
 		$response = Curler::get("/events");
@@ -101,6 +117,10 @@ class FrontController
 	 */
 	public static function getUserEventsPage(array $data = []): void
 	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
 		render("views/user_events_get", $data);
 	}
 
@@ -109,6 +129,10 @@ class FrontController
 	 */
 	public static function getUserEventRegisterPage(array $data = []): void
 	{
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
 		render("views/user_events_register", $data);
 	}
 
@@ -214,7 +238,21 @@ class FrontController
 		self::getEventCreatePage(["message" => "Event created successfully. View on All Events page"]);
 	}
 
-	public static function postEventUpdate(): void {}
+	public static function postEventUpdate(): void
+	{
 
-	public static function postUserEventRegister(): void {}
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
+	}
+
+	public static function postUserEventRegister(): void
+	{
+
+		if (!SessionManager::userLoggedIn()) {
+			static::getLoginPage(["error" => "You must be logged in to view this resource"]);
+			die();
+		}
+	}
 }
