@@ -9,22 +9,22 @@ services:
 
   auth_service:
     build: ./event_manager_api/auth_service
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     deploy:
       replicas: 2
 
   event_service:
     build: ./event_manager_api/event_management_service
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     deploy:
       replicas: 2
 
   user_service:
     build: ./event_manager_api/user_registration_service
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     deploy:
       replicas: 2
 
@@ -45,26 +45,26 @@ services:
     ports:
       - "6379:6379"
 
-  db:
-    image: mysql:latest
-    container_name: db
-    ports:
-      - "6033:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: scalable_assignment
-    volumes:
-      - dbdata:/var/lib/mysql
+  # db:
+  #   image: mysql:latest
+  #   container_name: db
+  #   ports:
+  #     - "6033:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: scalable_assignment
+  #   volumes:
+  #     - dbdata:/var/lib/mysql
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: pma
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-    restart: always
-    ports:
-      - "8084:80"
+#   phpmyadmin:
+#     image: phpmyadmin/phpmyadmin
+#     container_name: pma
+#     environment:
+#       PMA_HOST: db
+#       PMA_PORT: 3306
+#     restart: always
+#     ports:
+#       - "8084:80"
 
-volumes:
-  dbdata:
+# volumes:
+#   dbdata:
