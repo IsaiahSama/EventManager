@@ -1,9 +1,11 @@
 <?php
 
-$servername = "db";
-$username = "root";
-$password = "db";
-$database = "scalable_assignment";
+$env = parse_ini_file('.env');
+
+$servername = $env["DB_HOST"];
+$username = $env["DB_USER"];
+$password = $env["DB_PASS"];
+$database = $env["DB_NAME"];
 
 $conn = new mysqli($servername, $username, $password, $database);
 
